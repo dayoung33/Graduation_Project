@@ -10,11 +10,17 @@ public class PlayerController : MonoBehaviour
 
     private Movement3D movement3D;
     private Animator animator;
+    [SerializeField]
+    private GameObject shieldObj;
+
+    private bool ShieldOn = false;
+    public List<GameObject> AroundObjs;
 
     private void Awake()
     {
         movement3D = GetComponent<Movement3D>();
         animator = GetComponent<Animator>();
+        shieldObj.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,13 +45,49 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Shield");
         }
 
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+        if(Input.GetMouseButtonDown(0))
+        {
+            if (AroundObjs.Count > 0)
+            {
+                animator.SetBool("Grabed", true);
+                foreach(var obj in AroundObjs)
+                {
+                    obj.GetComponent<MovableObject>().curState = MovableObject.State.Gravity;
+                }
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            animator.SetBool("Grabed", false);
+            if (AroundObjs.Count > 0)
+            {
+                foreach (var obj in AroundObjs)
+                {
+                    obj.GetComponent<MovableObject>().curState = MovableObject.State.Attack;
+                }
+            }
+        }
 
     }
 
     private void ShieldEnd()
     {
         animator.ResetTrigger("Shield");
+    }
+
+    private void CreateShield()
+    {
+        if (!ShieldOn)
+        {
+            shieldObj.SetActive(true);
+            ShieldOn = true;
+            Invoke("ShieldOff", 5);
+        }
+    }
+
+    private void ShieldOff()
+    {
+        ShieldOn = false;
+        shieldObj.SetActive(false);
     }
 }

@@ -67,6 +67,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.59009814
+        functionName: CreateShield
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 16d24d773c8812b48aa84ba2814fd626,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -10,17 +10,21 @@ public class Movement3D : MonoBehaviour
     private float runSpeed = 0.4f;
     [SerializeField]
     private float jumpForce = 2.5f;
+    private float rotateSpeed = 1.0f;
     private float gravity = -9.8f;
     private Vector3 moveDirection;
     private CharacterController charcterController;
     private Animator animator;
 
+    //[SerializeField]
+    //private Transform cameraTransform;
+
 
     // Start is called before the first frame update
     private void Awake()
     {
-        charcterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+       charcterController = GetComponent<CharacterController>();
+       animator = GetComponent<Animator>();
 
     }
 
@@ -31,11 +35,11 @@ public class Movement3D : MonoBehaviour
         {
             moveDirection.y += gravity * Time.deltaTime;
             animator.ResetTrigger("Jump");
-
         }
 
         float moveSpeed = Mathf.Lerp(walkSpeed, runSpeed, Input.GetAxis("Sprint"));
 
+        //transform.forward = moveDirection;
         charcterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
 
