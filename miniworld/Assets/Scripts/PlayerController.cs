@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
             if (AroundObjs.Count > 0)
             {
                 animator.SetBool("Grabed", true);
+                animator.SetFloat("AnimSpeed", 1.5f);
                 foreach(var obj in AroundObjs)
                 {
                     obj.GetComponent<MovableObject>().curState = MovableObject.State.Gravity;
@@ -59,15 +60,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             animator.SetBool("Grabed", false);
-            if (AroundObjs.Count > 0)
-            {
-                foreach (var obj in AroundObjs)
-                {
-                    obj.GetComponent<MovableObject>().curState = MovableObject.State.Attack;
-                }
-            }
         }
 
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (ShieldOn)
+                return;
+            animator.SetTrigger("Hit");
+        }
     }
 
     private void ShieldEnd()
@@ -90,4 +94,16 @@ public class PlayerController : MonoBehaviour
         ShieldOn = false;
         shieldObj.SetActive(false);
     }
+
+    private void StartThrow()
+    {
+        if (AroundObjs.Count > 0)
+        {
+            foreach (var obj in AroundObjs)
+            {
+                obj.GetComponent<MovableObject>().curState = MovableObject.State.Attack;
+            }
+        }
+    }
+
 }

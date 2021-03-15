@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     Animator animator;
     NavMeshAgent nav;
     Rigidbody rigid;
+    [SerializeField]
+    private int HP = 5;
 
     public enum State { idle, walk, attck, hit, dead, end };
 
@@ -34,7 +36,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-      
+        if (HP <= 0)
+            curState = State.dead;
+        StateChange();
+    }
+
+    private void StateChange()
+    {
         switch (curState)
         {
             case State.idle:
@@ -42,6 +50,7 @@ public class Enemy : MonoBehaviour
                     float dist = Vector3.Distance(target.position, transform.position);
                     animator.SetBool("IsMove", false);
                     animator.SetBool("IsAttack", false);
+                    animator.ResetTrigger("Hit");
                     if (10.0f >= dist)
                     {
                         curState = State.walk;
@@ -54,6 +63,7 @@ public class Enemy : MonoBehaviour
                 {
                     animator.SetBool("IsMove", true);
                     animator.SetBool("IsAttack", false);
+                    animator.ResetTrigger("Hit");
                     nav.SetDestination(target.position);
                     if (!nav.pathPending)
                     {
@@ -71,6 +81,7 @@ public class Enemy : MonoBehaviour
                 {
                     animator.SetBool("IsMove", false);
                     animator.SetBool("IsAttack", true);
+                    animator.ResetTrigger("Hit");
                     nav.SetDestination(target.position);
                     if (!nav.pathPending)
                     {
@@ -85,6 +96,24 @@ public class Enemy : MonoBehaviour
                 }
                 break;
 
+            case State.dead:
+                {
+                    animator.SetBool("isDead", true);
+                }
+                break;
+
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Movable")
+        {
+            if (collision.gameObject.GetComponent<MovableObject>().curState == MovableObject.State.Attack)
+            {
+                animator.SetTrigger("Hit");
+                HP--;
+            }
+        }
+    }
+
 }
