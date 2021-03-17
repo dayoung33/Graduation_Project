@@ -7,9 +7,7 @@ public class MovableObject : MonoBehaviour
     public enum State {Gravity, Attack, End};
     public State curState = State.End;
 
-    [SerializeField]
     private Transform playerTransform;
-    [SerializeField]
     private Transform playerHand;
 
     private Rigidbody rigidbody;
@@ -70,9 +68,17 @@ void Update()
                     {
                         GrabTime = 0.0f;
                         rigidbody.useGravity = true;
+                        boxCollider.isTrigger = false;
                     }
                     break;
             }
+        }
+        else
+        {
+            curState = State.End;
+            GrabTime = 0.0f;
+            boxCollider.isTrigger = false;
+            rigidbody.useGravity = true;
         }
     }
 

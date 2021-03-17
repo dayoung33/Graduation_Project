@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
         float offset = 0.5f + Input.GetAxis("Sprint") * 0.5f; 
   
         animator.SetFloat("Horizontal", horizontal * offset);

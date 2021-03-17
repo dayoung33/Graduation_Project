@@ -39,14 +39,15 @@ public class Movement3D : MonoBehaviour
 
         float moveSpeed = Mathf.Lerp(walkSpeed, runSpeed, Input.GetAxis("Sprint"));
 
-        //transform.forward = moveDirection;
+        Vector3 nomalizeDirection = moveDirection.normalized;
+        transform.forward = new Vector3(nomalizeDirection.x, 0, nomalizeDirection.z);
         charcterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
 
     public void MoveTo(Vector3 direction)
     {
         Vector3 nomalizeDirection = direction.normalized;
-        moveDirection = new Vector3(nomalizeDirection.x,moveDirection.y, nomalizeDirection.z);
+        moveDirection = new Vector3(nomalizeDirection.x, moveDirection.y, nomalizeDirection.z);
     }
 
     public void JumpTo()
