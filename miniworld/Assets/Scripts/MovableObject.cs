@@ -32,10 +32,12 @@ public class MovableObject : MonoBehaviour
         OriginPos = transform.position;
         rigidbody = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-    }
+        playerTransform = GameObject.Find("Female_01_V01").transform;
+        playerHand = GameObject.Find("GrabObject").transform;
+}
 
-    // Update is called once per frame
-    void Update()
+// Update is called once per frame
+void Update()
     {
         if (isAround)
         {

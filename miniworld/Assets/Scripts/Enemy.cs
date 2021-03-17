@@ -12,9 +12,7 @@ public class Enemy : MonoBehaviour
     private int HP = 3;
 
     public enum State { idle, walk, attck, hit, dead, end };
-
-    [SerializeField]
-    private State curState = State.idle;
+    public State curState = State.idle;
 
     private void Awake()
     {
@@ -50,7 +48,7 @@ public class Enemy : MonoBehaviour
                     animator.SetBool("IsMove", false);
                     animator.SetBool("IsAttack", false);
                     animator.ResetTrigger("Hit");
-                    if (10.0f >= dist)
+                    if (7.0f >= dist)
                     {
                         curState = State.walk;
                     }
@@ -97,6 +95,7 @@ public class Enemy : MonoBehaviour
 
             case State.dead:
                 {
+                    nav.Stop();
                     animator.SetBool("isDead", true);
                 }
                 break;

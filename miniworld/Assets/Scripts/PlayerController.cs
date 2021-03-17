@@ -70,7 +70,8 @@ public class PlayerController : MonoBehaviour
         {
             if (ShieldOn)
                 return;
-            animator.SetTrigger("Hit");
+            if(collision.gameObject.GetComponent<Enemy>().curState == Enemy.State.attck)
+                animator.SetTrigger("Hit");
         }
     }
 
