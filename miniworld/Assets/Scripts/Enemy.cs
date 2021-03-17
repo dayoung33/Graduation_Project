@@ -9,8 +9,7 @@ public class Enemy : MonoBehaviour
     Animator animator;
     NavMeshAgent nav;
     Rigidbody rigid;
-    [SerializeField]
-    private int HP = 5;
+    private int HP = 3;
 
     public enum State { idle, walk, attck, hit, dead, end };
 
