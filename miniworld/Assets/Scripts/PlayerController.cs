@@ -14,13 +14,16 @@ public class PlayerController : MonoBehaviour
     private GameObject shieldObj;
 
     private bool ShieldOn = false;
+    private bool isGrabed = false;
     public List<GameObject> AroundObjs;
+    private Transform cameraArm;
 
     private void Awake()
     {
         movement3D = GetComponent<Movement3D>();
         animator = GetComponent<Animator>();
         shieldObj.SetActive(false);
+        cameraArm = GameObject.Find("CameraArm").transform;
     }
 
     // Update is called once per frame
@@ -31,9 +34,14 @@ public class PlayerController : MonoBehaviour
         float offset = 0.5f + Input.GetAxis("Sprint") * 0.5f; 
   
         animator.SetFloat("Horizontal", horizontal * offset);
-        animator.SetFloat("Vertical", vertical * offset);      
+        animator.SetFloat("Vertical", vertical * offset);
 
-        movement3D.MoveTo(new Vector3(horizontal, 0, vertical));
+        Vector3 camForward = new Vector3(cameraArm.forward.x, 0, cameraArm.forward.z).normalized;
+        Vector3 camRight = new Vector3(cameraArm.right.x, 0, cameraArm.right.z).normalized;
+
+        Vector3 MoveDir = camForward * vertical + camRight * horizontal;
+
+        movement3D.MoveTo(MoveDir);
 
         if (Input.GetKeyDown(jumpKeyCode))
         {
@@ -49,6 +57,7 @@ public class PlayerController : MonoBehaviour
         {
             if (AroundObjs.Count > 0)
             {
+                isGrabed = true;
                 animator.SetBool("Grabed", true);
                 animator.SetFloat("AnimSpeed", 1.5f);
                 foreach(var obj in AroundObjs)
@@ -59,6 +68,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
+            isGrabed = false;
             animator.SetBool("Grabed", false);
         }
 
@@ -70,8 +80,18 @@ public class PlayerController : MonoBehaviour
         {
             if (ShieldOn)
                 return;
-            if(collision.gameObject.GetComponent<Enemy>().curState == Enemy.State.attck)
+            if (collision.gameObject.GetComponent<Enemy>().curState == Enemy.State.attck)
+            {
+                isGrabed = false;
                 animator.SetTrigger("Hit");
+                if (AroundObjs.Count > 0)
+                {
+                    foreach (var obj in AroundObjs)
+                    {
+                        obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                    }
+                }
+            }
         }
     }
 

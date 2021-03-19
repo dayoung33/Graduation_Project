@@ -13,10 +13,12 @@ public class TPSCharacterController : MonoBehaviour
     [SerializeField]
     private Transform shield;
 
+    private Movement3D playerMovement;
+
     private float limitMinX = -10.0f;
     private float limitmaxX = 70.0f;
     private float eulerAngleX;
-    private float eulerAngleY;
+    public float eulerAngleY;
     float wheel = -0.45f;
 
     Animator animator;
@@ -36,6 +38,7 @@ public class TPSCharacterController : MonoBehaviour
 
     private void Move()
     {
+        Debug.DrawRay(transform.position, transform.forward, Color.red);
         cameraArm.position = new Vector3(characterBody.transform.position.x, characterBody.transform.position.y + 0.15f, characterBody.transform.position.z);
         shield.position = new Vector3(characterBody.transform.position.x, characterBody.transform.position.y + 0.15f, characterBody.transform.position.z);
     }

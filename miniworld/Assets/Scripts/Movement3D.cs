@@ -15,17 +15,13 @@ public class Movement3D : MonoBehaviour
     private Vector3 moveDirection;
     private CharacterController charcterController;
     private Animator animator;
-
-    //[SerializeField]
-    //private Transform cameraTransform;
-
+    
 
     // Start is called before the first frame update
     private void Awake()
     {
        charcterController = GetComponent<CharacterController>();
        animator = GetComponent<Animator>();
-
     }
 
     // Update is called once per frame
@@ -40,14 +36,14 @@ public class Movement3D : MonoBehaviour
         float moveSpeed = Mathf.Lerp(walkSpeed, runSpeed, Input.GetAxis("Sprint"));
 
         Vector3 nomalizeDirection = moveDirection.normalized;
-        transform.forward = new Vector3(nomalizeDirection.x, 0, nomalizeDirection.z);
+        transform.forward = new Vector3(nomalizeDirection.x, transform.forward.y, nomalizeDirection.z);
         charcterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
 
     public void MoveTo(Vector3 direction)
     {
         Vector3 nomalizeDirection = direction.normalized;
-        moveDirection = new Vector3(nomalizeDirection.x, moveDirection.y, nomalizeDirection.z);
+        moveDirection = new Vector3(nomalizeDirection.x , moveDirection.y, nomalizeDirection.z);
     }
 
     public void JumpTo()
@@ -58,4 +54,5 @@ public class Movement3D : MonoBehaviour
             animator.SetTrigger("Jump");
         }
     }
+
 }
