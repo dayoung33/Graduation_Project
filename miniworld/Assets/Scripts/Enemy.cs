@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     public enum State { idle, walk, attck, hit, dead, end };
     public State curState = State.idle;
+    private bool QuestInit = false;
 
     private void Awake()
     {
@@ -97,6 +99,11 @@ public class Enemy : MonoBehaviour
                 {
                     nav.Stop();
                     animator.SetBool("isDead", true);
+                    if (!QuestInit&&SceneManager.GetActiveScene().name == "SciFi_Industrial_SampleLayout")
+                    {
+                        GameObject.Find("UISystem").GetComponent<UIManager>().Quest(UIManager.QuestNum.Finish);
+                        QuestInit = true;
+                    }
                 }
                 break;
 

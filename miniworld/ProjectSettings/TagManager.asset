@@ -8,6 +8,7 @@ TagManager:
   - Movable
   - Ground
   - MonsterWeapon
+  - QuestMark
   layers:
   - Default
   - TransparentFX
