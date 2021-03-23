@@ -38,7 +38,6 @@ public class TPSCharacterController : MonoBehaviour
 
     private void Move()
     {
-        Debug.DrawRay(transform.position, transform.forward, Color.red);
         cameraArm.position = new Vector3(characterBody.transform.position.x, characterBody.transform.position.y + 0.15f, characterBody.transform.position.z);
         shield.position = new Vector3(characterBody.transform.position.x, characterBody.transform.position.y + 0.15f, characterBody.transform.position.z);
     }

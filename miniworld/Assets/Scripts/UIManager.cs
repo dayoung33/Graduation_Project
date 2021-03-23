@@ -6,6 +6,16 @@ public class UIManager : MonoBehaviour
 {
     public enum QuestNum { Grab,collBox,boxQuest,Shield, Attack,Finish};
     public GameObject textObject;
+    private KeyCode cheatKeyCode = KeyCode.Alpha1;
+    public GameObject CheatBoxObject;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(cheatKeyCode))
+        {
+            CheatBoxObject.SetActive(true);
+        }
+    }
 
     public void Quest(QuestNum ID)
     {

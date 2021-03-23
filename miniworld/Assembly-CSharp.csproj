@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\QuestManager.cs" />
     <Compile Include="Assets\Scripts\QuestMark.cs" />
     <Compile Include="Assets\Scripts\QuestboxCollCheck.cs" />
+    <Compile Include="Assets\Scripts\SceneChangeManager.cs" />
     <Compile Include="Assets\Scripts\TPSCharacterController.cs" />
     <Compile Include="Assets\Scripts\TextEffect.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
