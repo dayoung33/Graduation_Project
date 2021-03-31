@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrabed = false;
     public List<GameObject> AroundObjs;
     private Transform cameraArm;
+    private Vector3 MoveDir;
 
     private void Awake()
     {
@@ -31,15 +32,28 @@ public class PlayerController : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        float offset = 0.5f + Input.GetAxis("Sprint") * 0.5f; 
-  
+        float offset = 0.5f + Input.GetAxis("Sprint") * 0.5f;
+
+        if (horizontal !=0 || vertical != 0)
+            animator.SetFloat("AnimSpeed", 1.5f);
+        else
+            animator.SetFloat("AnimSpeed", 1.0f);
+
+
         animator.SetFloat("Horizontal", horizontal * offset);
         animator.SetFloat("Vertical", vertical * offset);
+
 
         Vector3 camForward = new Vector3(cameraArm.forward.x, 0, cameraArm.forward.z).normalized;
         Vector3 camRight = new Vector3(cameraArm.right.x, 0, cameraArm.right.z).normalized;
 
-        Vector3 MoveDir = camForward * vertical + camRight * horizontal;
+        MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
+        if(vertical == 0 && horizontal != 0)
+            MoveDir = camForward * 0.3f + camRight * horizontal * 0.3f * Time.deltaTime;
+        if (vertical < 0)
+            MoveDir = new Vector3(horizontal, 0, vertical);
+
+        //Vector3 MoveDir = new Vector3(horizontal, 0, vertical);
 
         movement3D.MoveTo(MoveDir);
 

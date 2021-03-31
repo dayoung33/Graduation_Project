@@ -31,7 +31,8 @@ public class TPSCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LookAround();
+        //LookAround();
+       
         Move();
         Zoom();
     }
@@ -41,6 +42,7 @@ public class TPSCharacterController : MonoBehaviour
         cameraArm.position = new Vector3(characterBody.transform.position.x, characterBody.transform.position.y + 0.15f, characterBody.transform.position.z);
         shield.position = new Vector3(characterBody.transform.position.x, characterBody.transform.position.y + 0.15f, characterBody.transform.position.z);
     }
+
 
     private void LookAround()
     {

@@ -5,12 +5,12 @@ using UnityEngine;
 public class Movement3D : MonoBehaviour
 {
     [SerializeField]
-    private float walkSpeed = 0.2f;
+    private float walkSpeed = 0.3f;
     [SerializeField]
-    private float runSpeed = 0.4f;
+    private float runSpeed = 0.6f;
     [SerializeField]
     private float jumpForce = 2.5f;
-    private float rotateSpeed = 1.0f;
+    private float rotateSpeed = 0.1f;
     private float gravity = -9.8f;
     private Vector3 moveDirection;
     private CharacterController charcterController;
@@ -43,7 +43,7 @@ public class Movement3D : MonoBehaviour
     public void MoveTo(Vector3 direction)
     {
         Vector3 nomalizeDirection = direction.normalized;
-        moveDirection = new Vector3(nomalizeDirection.x , moveDirection.y, nomalizeDirection.z);
+        moveDirection = new Vector3(nomalizeDirection.x, moveDirection.y, nomalizeDirection.z);
     }
 
     public void JumpTo()
