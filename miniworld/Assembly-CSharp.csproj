@@ -121,6 +121,10 @@
     <Compile Include="Assets\Scripts\TPSCharacterController.cs" />
     <Compile Include="Assets\Scripts\TextEffect.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\living birds\demo\livingBirdsDemoScript.cs" />
+    <Compile Include="Assets\living birds\scripts\lb_Bird.cs" />
+    <Compile Include="Assets\living birds\scripts\lb_BirdController.cs" />
+    <Compile Include="Assets\living birds\scripts\lb_CrowProximity.cs" />
     <None Include="Assets\NatureStarterKit2\Standard Assets\Effects\ImageEffects\Shaders\Tonemapper.shader" />
     <None Include="Assets\Particlecollection_Free samples\Plugins\Effect\Shader\Toon Blended Premmultiply.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

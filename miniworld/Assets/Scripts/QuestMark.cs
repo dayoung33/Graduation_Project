@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class QuestMark : MonoBehaviour
 {
@@ -10,15 +12,21 @@ public class QuestMark : MonoBehaviour
 
     private void Awake()
     {
-        UIMgr = GameObject.Find("UISystem").GetComponent<UIManager>();
+        if (SceneManager.GetActiveScene().name == "SciFi_Industrial_SampleLayout")
+        {
+            UIMgr = GameObject.Find("UISystem").GetComponent<UIManager>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (!UIMgr)
         {
-            UIMgr.Quest(myQuestNum);
-            GameObject.Destroy(gameObject,2.0f);
+            if (other.gameObject.tag == "Player")
+            {
+                UIMgr.Quest(myQuestNum);
+                GameObject.Destroy(gameObject, 2.0f);
+            }
         }
     }
 }
