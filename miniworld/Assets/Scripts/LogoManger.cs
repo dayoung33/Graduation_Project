@@ -20,7 +20,7 @@ public class LogoManger : MonoBehaviour
     { 
         totalTimer += Time.deltaTime;
         if (LogoText.fontSize >= 30)
-            LogoText.fontSize -= 2;
+            LogoText.fontSize -= 1;
 
         else
         {
