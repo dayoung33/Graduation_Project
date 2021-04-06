@@ -20,7 +20,15 @@ public class MainMenuUIMgr : MonoBehaviour
     }
      public void OnclickStart()
     {
-        SceneManager.LoadScene("Demo");
+        LodingManager.LoadScene("MainStage");
+    }
+    public void OnclickTutorial()
+    {
+        LodingManager.LoadScene("Tutorial");
+    }
+    public void OnclickSetting()
+    {
+        Debug.Log("세팅");
     }
     public void OnclickQuit()
     {

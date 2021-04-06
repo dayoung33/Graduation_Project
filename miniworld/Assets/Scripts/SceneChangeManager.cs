@@ -19,6 +19,6 @@ public class SceneChangeManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene("Demo");
+        LodingManager.LoadScene("MainStage");
     }
 }

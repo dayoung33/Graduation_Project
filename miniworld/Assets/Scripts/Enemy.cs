@@ -99,7 +99,7 @@ public class Enemy : MonoBehaviour
                 {
                     nav.Stop();
                     animator.SetBool("isDead", true);
-                    if (!QuestInit&&SceneManager.GetActiveScene().name == "SciFi_Industrial_SampleLayout")
+                    if (!QuestInit&&SceneManager.GetActiveScene().name == "Tutorial")
                     {
                         GameObject.Find("UISystem").GetComponent<UIManager>().Quest(UIManager.QuestNum.Finish);
                         QuestInit = true;

@@ -12,6 +12,15 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 4dacdf6bcdb34e34ca16e124ba807799
   - enabled: 1
-    path: Assets/AssetStoreOriginals/_SNAPS_PrototypingAssets/SciFi_Industrial/SampleScenes/SciFi_Industrial_SampleLayout.unity
+    path: Assets/Scenes/Tutorial.unity
     guid: b2fa8882363c4644b93046de18bcbf19
+  - enabled: 1
+    path: Assets/Scenes/MainStage.unity
+    guid: d4e37ce482d98a44894c118c9ffc655f
+  - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: 5527c6d18e8897240bc52df4a8ae6652
+  - enabled: 1
+    path: Assets/Scenes/Logo.unity
+    guid: 23ab4d3de21ef2d449abe42618da9552
   m_configObjects: {}

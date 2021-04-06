@@ -12,7 +12,7 @@ public class QuestMark : MonoBehaviour
 
     private void Awake()
     {
-        if (SceneManager.GetActiveScene().name == "SciFi_Industrial_SampleLayout")
+        if (SceneManager.GetActiveScene().name == "Tutorial")
         {
             UIMgr = GameObject.Find("UISystem").GetComponent<UIManager>();
         }
@@ -20,7 +20,7 @@ public class QuestMark : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!UIMgr)
+        if (UIMgr != null)
         {
             if (other.gameObject.tag == "Player")
             {
