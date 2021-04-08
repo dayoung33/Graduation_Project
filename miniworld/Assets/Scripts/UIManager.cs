@@ -8,6 +8,12 @@ public class UIManager : MonoBehaviour
     public GameObject textObject;
     private KeyCode cheatKeyCode = KeyCode.Alpha1;
     public GameObject CheatBoxObject;
+    public GameObject LightSylinder;
+
+    private void Awake()
+    {
+        LightSylinder.SetActive(false);
+    }
 
     private void Update()
     {
@@ -54,6 +60,7 @@ public class UIManager : MonoBehaviour
             case QuestNum.Finish:
                 {
                     textObject.SetActive(true);
+                    LightSylinder.SetActive(true);
                     textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.quest.finish;
                 }
                 break;
