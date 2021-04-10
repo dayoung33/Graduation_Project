@@ -10,7 +10,6 @@ public class Movement3D : MonoBehaviour
     private float runSpeed = 0.6f;
     [SerializeField]
     private float jumpForce = 2.5f;
-    private float rotateSpeed = 0.1f;
     private float gravity = -9.8f;
     private Vector3 moveDirection;
     private CharacterController charcterController;

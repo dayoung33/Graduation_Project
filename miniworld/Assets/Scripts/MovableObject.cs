@@ -10,16 +10,17 @@ public class MovableObject : MonoBehaviour
     private Transform playerTransform;
     private Transform playerHand;
 
-    private Rigidbody rigidbody;
+    private Rigidbody myrigidbody;
     private BoxCollider boxCollider;
 
     private Vector3 throwAngle;
     private Vector3 OriginPos;
 
+    PlayerController playercontroller;
     private float throwPower = 1.0f;
     private float moveSpeed = 0.5f;
     private float maxThrowPower = 1.0f;
-    private float GrabTime = 0.0f;
+    public float GrabTime = 0.0f;
 
     public bool isAround = false;
  
@@ -28,9 +29,10 @@ public class MovableObject : MonoBehaviour
     void Start()
     {
         OriginPos = transform.position;
-        rigidbody = GetComponent<Rigidbody>();
+        myrigidbody = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         playerTransform = GameObject.Find("Female_01_V01").transform;
+        playercontroller = GameObject.Find("Female_01_V01").GetComponent<PlayerController>();
         playerHand = GameObject.Find("GrabObject").transform;
 }
 
@@ -45,20 +47,25 @@ void Update()
                     {
                         throwAngle = playerTransform.forward * 10.0f;
                         throwAngle.y = 10.0f;
-                        rigidbody.useGravity = true;
+                        myrigidbody.useGravity = true;
                         boxCollider.isTrigger = false;
                         throwPower *= (GrabTime * 0.3f);
                         if (throwPower >= maxThrowPower)
                             throwPower = maxThrowPower;
-                        rigidbody.AddForce(throwAngle * throwPower * Time.deltaTime, ForceMode.Impulse);
+                        myrigidbody.AddForce(throwAngle * throwPower * Time.deltaTime, ForceMode.Impulse);
                     }
                     break;
                 case State.Gravity:
                     {
                         if (0.3f >= Mathf.Abs(OriginPos.y - transform.position.y))
                         {
-                            GrabTime += Time.deltaTime;                         
-                            rigidbody.useGravity = false;
+                            GrabTime += Time.deltaTime;
+                            if (GrabTime > 4.0f)
+                                GrabTime = 4.0f;
+                            playercontroller.playerMana -= (GrabTime * 0.05f);
+                            if (playercontroller.playerMana < -10.0f)
+                                playercontroller.playerMana = -10.0f;
+                            myrigidbody.useGravity = false;
                             boxCollider.isTrigger = true;
                             transform.position = Vector3.MoveTowards(transform.position, playerHand.position, moveSpeed * Time.deltaTime);
                         }
@@ -67,7 +74,7 @@ void Update()
                 case State.End:
                     {
                         GrabTime = 0.0f;
-                        rigidbody.useGravity = true;
+                        myrigidbody.useGravity = true;
                         boxCollider.isTrigger = false;
                     }
                     break;
@@ -78,7 +85,7 @@ void Update()
             curState = State.End;
             GrabTime = 0.0f;
             boxCollider.isTrigger = false;
-            rigidbody.useGravity = true;
+            myrigidbody.useGravity = true;
         }
     }
 

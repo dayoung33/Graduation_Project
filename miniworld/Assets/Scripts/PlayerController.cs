@@ -22,6 +22,16 @@ public class PlayerController : MonoBehaviour
     private Transform cameraArm;
     private Vector3 MoveDir;
 
+    public float hitCoolTime = 0;
+    public float hitMaxCoolTime = 5.0f;
+
+    public float playerHP = 100;
+    private float playerMaxHP = 100;
+    public float playerMana = 100;
+    private float playerMaxMana = 100;
+    public float shieldCoolTime = -1.0f;
+    private float shieldMaxCoolTime = 9;
+
     private void Awake()
     {
         movement3D = GetComponent<Movement3D>();
@@ -47,6 +57,21 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Horizontal", horizontal * offset);
         animator.SetFloat("Vertical", vertical * offset);
 
+        if (playerMana < playerMaxMana)
+        {
+            playerMana += 0.3f;
+        }
+
+        if (playerHP < playerMaxHP)
+        {
+            playerHP += 0.2f;
+        }
+
+        if(hitCoolTime > 0.0f)
+        {          
+            hitCoolTime -= Time.deltaTime;
+        }
+
 
         Vector3 camForward = new Vector3(cameraArm.forward.x, 0, cameraArm.forward.z).normalized;
         Vector3 camRight = new Vector3(cameraArm.right.x, 0, cameraArm.right.z).normalized;
@@ -66,7 +91,7 @@ public class PlayerController : MonoBehaviour
             movement3D.JumpTo();
         }
 
-        if(Input.GetKeyDown(shieldKeyCode))
+        if (Input.GetKeyDown(shieldKeyCode) && (shieldCoolTime <= 0.0f) && playerMana > 0.0f) 
         {
             animator.SetTrigger("Shield");
         }
@@ -79,21 +104,37 @@ public class PlayerController : MonoBehaviour
         {
             miniMap.SetActive(false);
         }
-
         if(Input.GetMouseButtonDown(0))
         {
-            if (AroundObjs.Count > 0)
+            if (AroundObjs.Count > 0&& playerMana > 0.0f)
             {
                 isGrabed = true;
                 animator.SetBool("Grabed", true);
                 animator.SetFloat("AnimSpeed", 1.5f);
-                foreach(var obj in AroundObjs)
+                foreach (var obj in AroundObjs)
                 {
                     obj.GetComponent<MovableObject>().curState = MovableObject.State.Gravity;
                 }
             }
         }
+
         if (Input.GetMouseButtonUp(0))
+        {
+            if (isGrabed)
+            { 
+                isGrabed = false;
+                animator.SetBool("Grabed", false);
+            }
+        }
+
+        if (shieldCoolTime > 0.0f)
+            shieldCoolTime -= Time.deltaTime;
+
+    }
+
+    private void LateUpdate()
+    {
+        if (playerMana <= 0.0f)
         {
             isGrabed = false;
             animator.SetBool("Grabed", false);
@@ -107,10 +148,12 @@ public class PlayerController : MonoBehaviour
         {
             if (ShieldOn)
                 return;
-            if (collision.gameObject.GetComponent<Enemy>().curState == Enemy.State.attck)
+            if (collision.gameObject.GetComponent<Enemy>().curState == Enemy.State.attck && hitCoolTime <= 0.0f)
             {
+                hitCoolTime = hitMaxCoolTime;
                 isGrabed = false;
                 animator.SetTrigger("Hit");
+                playerHP -= 10;
                 if (AroundObjs.Count > 0)
                 {
                     foreach (var obj in AroundObjs)
@@ -131,6 +174,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!ShieldOn)
         {
+            shieldCoolTime = shieldMaxCoolTime;
             shieldObj.SetActive(true);
             ShieldOn = true;
             Invoke("ShieldOff", 5);

@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     {
         if (HP <= 0)
             curState = State.dead;
+
         StateChange();
     }
 
@@ -97,8 +98,10 @@ public class Enemy : MonoBehaviour
 
             case State.dead:
                 {
-                    nav.Stop();
+                    nav.isStopped = true;
+                    nav.velocity = Vector3.zero;
                     animator.SetBool("isDead", true);
+                    Destroy(gameObject, 5.0f);
                     if (!QuestInit&&SceneManager.GetActiveScene().name == "Tutorial")
                     {
                         GameObject.Find("UISystem").GetComponent<UIManager>().Quest(UIManager.QuestNum.Finish);

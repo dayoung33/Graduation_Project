@@ -14,7 +14,6 @@ public class QuestManager : MonoBehaviour
     public enum quest { opening, walk, run, grab, fstQuest, StartfstQuest, shield, attack, finish, end};
     [SerializeField]
     public quest curQuest = quest.opening;
-    private quest preQuest = quest.end;
 
     private float time = 0;
     private bool endFade = false;
