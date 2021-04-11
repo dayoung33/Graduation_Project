@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private KeyCode jumpKeyCode = KeyCode.Space;
     private KeyCode shieldKeyCode = KeyCode.E;
     private KeyCode MiniMapKeyCode = KeyCode.M;
+    private KeyCode MiniMapZoomKeyCode = KeyCode.Tab;
 
     private Movement3D movement3D;
     private Animator animator;
@@ -15,6 +16,10 @@ public class PlayerController : MonoBehaviour
     private GameObject shieldObj;
     [SerializeField]
     private GameObject miniMap;
+    [SerializeField]
+    private Transform miniMapCameraPos;
+
+    private bool MiniMapOn=false;
 
     private bool ShieldOn = false;
     private bool isGrabed = false;
@@ -96,13 +101,31 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Shield");
         }
 
-        if(Input.GetKeyDown(MiniMapKeyCode))
-        {
-            miniMap.SetActive(true);
-        }
         if(Input.GetKeyUp(MiniMapKeyCode))
         {
-            miniMap.SetActive(false);
+            if (!MiniMapOn)
+            {
+                miniMap.SetActive(true);
+                MiniMapOn = true;
+            }
+            else
+            {
+                miniMap.SetActive(false);
+                MiniMapOn = false;
+            }
+        }
+
+        if(MiniMapOn)
+        {
+            if(Input.GetKeyDown(MiniMapZoomKeyCode))
+            {
+                miniMapCameraPos.position = new Vector3(transform.position.x, 80, transform.position.z-20);
+            }
+            if (Input.GetKeyUp(MiniMapZoomKeyCode))
+            {
+                miniMapCameraPos.position = new Vector3(4.2f, 182, -44);
+            }
+
         }
         if(Input.GetMouseButtonDown(0))
         {
