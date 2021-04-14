@@ -16,7 +16,8 @@ public class PlayerUISetting : MonoBehaviour
     public Image HPImaage;
     public Text timeText;
     public Image Blood;
-
+    public Image WaterBubble;
+    private float waterPosY = -300;
 
 
     // Start is called before the first frame update
@@ -43,10 +44,13 @@ public class PlayerUISetting : MonoBehaviour
         manaImage.fillAmount = playercontroller.playerMana * 0.01f;
         HPImaage.fillAmount = playercontroller.playerHP * 0.01f;
 
-       // if(playercontroller.hitCoolTime >0.0f)
-       // {
-            Blood.color = new Color(1, 1, 1, (playercontroller.hitCoolTime / playercontroller.hitMaxCoolTime));
-       // }
+        // if(playercontroller.hitCoolTime >0.0f)
+        // {
+        Blood.color = new Color(1, 1, 1, (playercontroller.hitCoolTime / playercontroller.hitMaxCoolTime));
+        // }
 
+        if (waterPosY < 100)
+            waterPosY+=Time.deltaTime*200;
+        WaterBubble.rectTransform.anchoredPosition = new Vector3(0, waterPosY, 0);
     }
 }
