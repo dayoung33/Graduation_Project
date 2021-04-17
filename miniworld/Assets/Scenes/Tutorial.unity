@@ -399,6 +399,7 @@ MonoBehaviour:
   HPImaage: {fileID: 541522498}
   timeText: {fileID: 13861061}
   Blood: {fileID: 532758680}
+  WaterBubble: {fileID: 0}
 --- !u!1001 &19206301
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21742,7 +21743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018405384}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 16.677557, y: 48.422462, z: 31.883106}
+  m_LocalPosition: {x: 1.2, y: 40, z: 35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1837680997}
@@ -38355,7 +38356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837680996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.487557, y: -8.422462, z: 3.116894}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1018405386}
@@ -42970,6 +42971,11 @@ PrefabInstance:
       propertyPath: miniMap
       value: 
       objectReference: {fileID: 1326099855}
+    - target: {fileID: 32225087569642635, guid: 152bac1de887d3a419b4beb5ebc58331,
+        type: 3}
+      propertyPath: miniMapCameraPos
+      value: 
+      objectReference: {fileID: 1018405386}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 152bac1de887d3a419b4beb5ebc58331, type: 3}
 --- !u!1 &2033376958 stripped

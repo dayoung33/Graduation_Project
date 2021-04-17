@@ -16,7 +16,9 @@ public class PlayerUISetting : MonoBehaviour
     public Image HPImaage;
     public Text timeText;
     public Image Blood;
+    public GameObject WaterEffect;
     public Image WaterBubble;
+
     private float waterPosY = -300;
 
 
@@ -48,9 +50,24 @@ public class PlayerUISetting : MonoBehaviour
         // {
         Blood.color = new Color(1, 1, 1, (playercontroller.hitCoolTime / playercontroller.hitMaxCoolTime));
         // }
+        //if (WaterEffect)
+        //{
+        //    if (playercontroller.itsRainning&&!playercontroller.underBench&&!playercontroller.ShieldOn)
+        //    {
+        //        WaterEffect.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        WaterEffect.SetActive(false);
+        //        waterPosY = -300;
+        //    }
+        //}
 
-        if (waterPosY < 100)
-            waterPosY+=Time.deltaTime*200;
-        WaterBubble.rectTransform.anchoredPosition = new Vector3(0, waterPosY, 0);
+        //if (WaterBubble)
+        //{
+        //    if (waterPosY < 100)
+        //        waterPosY += Time.deltaTime * 200;
+        //    WaterBubble.rectTransform.anchoredPosition = new Vector3(0, waterPosY, 0);
+        //}
     }
 }

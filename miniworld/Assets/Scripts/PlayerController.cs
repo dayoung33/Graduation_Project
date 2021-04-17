@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,9 +20,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform miniMapCameraPos;
 
-    private bool MiniMapOn=false;
+    private bool MiniMapOn = false;
+    public bool itsRainning = false;
+    public bool underBench = false;
+    public bool ShieldOn = false;
 
-    private bool ShieldOn = false;
     private bool isGrabed = false;
     public List<GameObject> AroundObjs;
     private Transform cameraArm;
@@ -69,12 +72,23 @@ public class PlayerController : MonoBehaviour
 
         if (playerHP < playerMaxHP)
         {
-            playerHP += 0.2f;
+            playerHP += 0.1f;
         }
 
         if(hitCoolTime > 0.0f)
         {          
             hitCoolTime -= Time.deltaTime;
+        }
+
+        if (itsRainning && !underBench && !ShieldOn)
+        {
+            playerHP -= 0.3f;
+            if(!animator.GetBool("RainHit"))
+                animator.SetBool("RainHit", true);
+        }
+        else
+        {
+            animator.SetBool("RainHit", false);
         }
 
 
@@ -117,13 +131,20 @@ public class PlayerController : MonoBehaviour
 
         if(MiniMapOn)
         {
-            if(Input.GetKeyDown(MiniMapZoomKeyCode))
-            {
-                miniMapCameraPos.position = new Vector3(transform.position.x, 80, transform.position.z-20);
+
+             if (Input.GetKeyDown(MiniMapZoomKeyCode))
+             {
+                if (SceneManager.GetActiveScene().name == "MainStage")
+                    miniMapCameraPos.position = new Vector3(transform.position.x, 80, transform.position.z - 20);
+                else if (SceneManager.GetActiveScene().name == "Tutorial")
+                    miniMapCameraPos.position = new Vector3(transform.position.x, 20, transform.position.z - 0);
             }
-            if (Input.GetKeyUp(MiniMapZoomKeyCode))
-            {
-                miniMapCameraPos.position = new Vector3(4.2f, 182, -44);
+             if (Input.GetKeyUp(MiniMapZoomKeyCode))
+             {
+                if (SceneManager.GetActiveScene().name == "MainStage")
+                    miniMapCameraPos.position = new Vector3(4.2f, 182, -44);
+                else if (SceneManager.GetActiveScene().name == "Tutorial")
+                    miniMapCameraPos.position = new Vector3(1.2f, 40, 35);
             }
 
         }
@@ -188,6 +209,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Rain")
+        {
+            itsRainning = true;
+        }
+        if (other.gameObject.tag == "NotRain")
+        {
+            underBench = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Rain")
+        {
+            itsRainning = false;
+        }
+        if (other.gameObject.tag == "NotRain")
+        {
+            underBench = false;
+        }
+    }
+
+
     private void ShieldEnd()
     {
         animator.ResetTrigger("Shield");
@@ -200,7 +246,7 @@ public class PlayerController : MonoBehaviour
             shieldCoolTime = shieldMaxCoolTime;
             shieldObj.SetActive(true);
             ShieldOn = true;
-            Invoke("ShieldOff", 5);
+            Invoke("ShieldOff", 7);
         }
     }
 

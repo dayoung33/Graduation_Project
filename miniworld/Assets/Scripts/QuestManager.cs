@@ -11,7 +11,7 @@ public class QuestManager : MonoBehaviour
     private Text questText;
     private GameObject backObject;
 
-    public enum quest { opening, walk, run, grab, fstQuest, StartfstQuest, shield, attack, finish, end};
+    public enum quest { opening, walk, run, map, grab, fstQuest, StartfstQuest, shield, attack, finish, end};
     [SerializeField]
     public quest curQuest = quest.opening;
 
@@ -64,6 +64,13 @@ public class QuestManager : MonoBehaviour
                 {
                     backTransform.sizeDelta = new Vector2(420, 60);
                     questText.text = @"Shift키를 누르면 달릴 수 있습니다.";
+                    FadeInOut();
+                }
+                break;
+            case quest.map:
+                {
+                    backTransform.sizeDelta = new Vector2(440, 60);
+                    questText.text = @"M 키를 누르면 지도를 볼 수 있습니다.";
                     FadeInOut();
                 }
                 break;
