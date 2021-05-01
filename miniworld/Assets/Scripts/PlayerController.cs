@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private KeyCode jumpKeyCode = KeyCode.Space;
     private KeyCode shieldKeyCode = KeyCode.E;
     private KeyCode MiniMapKeyCode = KeyCode.M;
+    private KeyCode ClimbKeyCode = KeyCode.G;
     private KeyCode MiniMapZoomKeyCode = KeyCode.Tab;
 
     private Movement3D movement3D;
@@ -40,6 +41,9 @@ public class PlayerController : MonoBehaviour
     public float shieldCoolTime = -1.0f;
     private float shieldMaxCoolTime = 9;
 
+    private bool isClimbing = false;
+    private bool climbEnd = false;
+
     private void Awake()
     {
         movement3D = GetComponent<Movement3D>();
@@ -61,9 +65,6 @@ public class PlayerController : MonoBehaviour
         else
             animator.SetFloat("AnimSpeed", 1.0f);
 
-
-        animator.SetFloat("Horizontal", horizontal * offset);
-        animator.SetFloat("Vertical", vertical * offset);
 
         if (playerMana < playerMaxMana)
         {
@@ -91,19 +92,43 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("RainHit", false);
         }
 
-
         Vector3 camForward = new Vector3(cameraArm.forward.x, 0, cameraArm.forward.z).normalized;
         Vector3 camRight = new Vector3(cameraArm.right.x, 0, cameraArm.right.z).normalized;
 
-        MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
-        if(vertical == 0 && horizontal != 0)
-            MoveDir = camForward * 0.3f + camRight * horizontal * 0.3f * Time.deltaTime;
-        if (vertical < 0)
-            MoveDir = new Vector3(horizontal, 0, vertical);
+        if (!isClimbing)
+        {
+            if (!climbEnd)
+            {
+                animator.SetFloat("Horizontal", horizontal * offset);
+                animator.SetFloat("Vertical", vertical * offset);
+            }
 
-        //Vector3 MoveDir = new Vector3(horizontal, 0, vertical);
+            MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
+            if (vertical == 0 && horizontal != 0)
+                MoveDir = camForward * 0.3f + camRight * horizontal * 0.3f * Time.deltaTime;
+            if (vertical < 0)
+                 MoveDir = new Vector3(horizontal, 0, vertical);           
+        }
 
-        movement3D.MoveTo(MoveDir);
+        else
+        {
+            if (!climbEnd)
+            {
+                MoveDir = new Vector3(0, 0, 0);
+                movement3D.ClimbTo();
+            }
+            else
+            {
+                movement3D.ClimbEnd();
+                MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
+
+            }
+        }
+
+
+       movement3D.MoveTo(MoveDir);
+    
+
 
         if (Input.GetKeyDown(jumpKeyCode))
         {
@@ -219,6 +244,24 @@ public class PlayerController : MonoBehaviour
         {
             underBench = true;
         }
+        if (other.gameObject.tag == "ClimbingEnd")
+        {
+            animator.SetTrigger("ClimbingEnd");
+            climbEnd = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "ClimbingStart")
+        {
+            if (Input.GetKeyDown(ClimbKeyCode))
+            {
+                animator.SetTrigger("ClimbingStart");
+                isClimbing = true;
+                movement3D.isClimbing = true;
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -231,6 +274,13 @@ public class PlayerController : MonoBehaviour
         {
             underBench = false;
         }
+        if (other.gameObject.tag == "ClimbingEnd")
+        {
+            climbEnd = false;
+            isClimbing = false;
+            movement3D.isClimbing = false;
+        }
+
     }
 
 

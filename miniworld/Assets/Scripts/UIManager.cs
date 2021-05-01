@@ -30,38 +30,38 @@ public class UIManager : MonoBehaviour
             case QuestNum.Grab:
                 {
                     textObject.SetActive(true);
-                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.quest.grab;
+                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.eQuest.grab;
                 }
                 break;
             case QuestNum.collBox:
                 {
                     textObject.SetActive(true);
-                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.quest.fstQuest;
+                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.eQuest.fstQuest;
                 }
                 break;
             case QuestNum.boxQuest:
                 {
                     textObject.SetActive(true);
-                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.quest.StartfstQuest;
+                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.eQuest.StartfstQuest;
                 }
                 break;
             case QuestNum.Shield:
                 {
                     textObject.SetActive(true);
-                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.quest.shield;
+                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.eQuest.shield;
                 }
                 break;
             case QuestNum.Attack:
                 {
                     textObject.SetActive(true);
-                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.quest.attack;
+                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.eQuest.attack;
                 }
                 break;
             case QuestNum.Finish:
                 {
                     textObject.SetActive(true);
                     LightSylinder.SetActive(true);
-                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.quest.finish;
+                    textObject.GetComponentInParent<QuestManager>().curQuest = QuestManager.eQuest.finish;
                 }
                 break;
         }

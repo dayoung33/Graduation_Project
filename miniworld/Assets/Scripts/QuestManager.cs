@@ -5,26 +5,24 @@ using UnityEngine.UI;
 
 public class QuestManager : MonoBehaviour
 {
-    private GameObject textBackground;
     private Image backImage;
     private RectTransform backTransform;
     private Text questText;
     private GameObject backObject;
 
-    public enum quest { opening, walk, run, map, grab, fstQuest, StartfstQuest, shield, attack, finish, end};
+    public enum eQuest { opening, walk, run, map, grab, fstQuest, StartfstQuest, shield, attack, finish, end};
     [SerializeField]
-    public quest curQuest = quest.opening;
+    public eQuest curQuest = eQuest.opening;
 
     private float time = 0;
     private bool endFade = false;
     // Start is called before the first frame update
     void Start()
     {
-        textBackground = GameObject.Find("TextBackground");
-        backImage = textBackground.GetComponentInChildren<Image>();
-        questText = GetComponentInChildren<Text>();
-        backTransform = textBackground.GetComponentInChildren<RectTransform>();
         backObject = GameObject.Find("TextBackground");
+        backImage = backObject.GetComponentInChildren<Image>();
+        questText = GetComponentInChildren<Text>();
+        backTransform = backObject.GetComponentInChildren<RectTransform>();
 
         questText.text = @"작은 세상에 입장하셨습니다.";
     }
@@ -34,82 +32,82 @@ public class QuestManager : MonoBehaviour
     {
         switch (curQuest)
         {
-            case quest.opening:
+            case eQuest.opening:
                 {
                     FadeInOut();
                     if(endFade)
                     {                      
-                        curQuest = quest.walk;
+                        curQuest = eQuest.walk;
                         endFade = false;
                         backObject.SetActive(true);
 
                     }
                 }
                 break;
-            case quest.walk:
+            case eQuest.walk:
                 {
                     backTransform.sizeDelta = new Vector2(500, 60);
                     questText.text = @"WASD 키로 이동해 느낌표를 찾아가세요.";
                     FadeInOut();
                     if (endFade)
                     {
-                        curQuest = quest.run;
+                        curQuest = eQuest.run;
                         endFade = false;
                         backObject.SetActive(true);
 
                     }
                 }
                 break;
-            case quest.run:
+            case eQuest.run:
                 {
                     backTransform.sizeDelta = new Vector2(420, 60);
                     questText.text = @"Shift키를 누르면 달릴 수 있습니다.";
                     FadeInOut();
                 }
                 break;
-            case quest.map:
+            case eQuest.map:
                 {
                     backTransform.sizeDelta = new Vector2(440, 60);
                     questText.text = @"M 키를 누르면 지도를 볼 수 있습니다.";
                     FadeInOut();
                 }
                 break;
-            case quest.grab:
+            case eQuest.grab:
                 {
                     backTransform.sizeDelta = new Vector2(600, 60);
                     questText.text = @"마우스 좌클릭으로 가까이 있는 물체를 움직일 수 있습니다.";
                     FadeInOut();
                 }
                 break;
-            case quest.fstQuest:
+            case eQuest.fstQuest:
                 {
                     backTransform.sizeDelta = new Vector2(500, 60);
                     questText.text = @"좋아요 앞의 프레임 안에 상자를 넣어보세요.";
                     FadeInOut();
                 }
                 break;
-            case quest.StartfstQuest:
+            case eQuest.StartfstQuest:
                 {
                     backTransform.sizeDelta = new Vector2(700, 60);
                     questText.text = @"잘했어요. 이제 공격을 배우러 가볼까요. 새로운 느낌표 찾아가세요.";
                     FadeInOut();
                 }
                 break;
-            case quest.shield:
+            case eQuest.shield:
                 {
                     backTransform.sizeDelta = new Vector2(420, 60);
                     questText.text = @"E 키를 누르면 방어막이 생성됩니다.";
                     FadeInOut();
                 }
                 break;
-            case quest.attack:
+            case eQuest.attack:
                 {
                     backTransform.sizeDelta = new Vector2(700, 60);
                     questText.text = @"클릭하는 시간동안 던지는 힘이 세집니다. 스킬을 이용해 거미를 죽이세요";
                     FadeInOut();
                 }
                 break;
-            case quest.finish:
+            case eQuest.finish:
                 {
                     backTransform.sizeDelta = new Vector2(600, 60);
                     questText.text = @"대단해요! 이제 튜터리얼 마지막 단계인 빛의 기둥에 도착하세요.";

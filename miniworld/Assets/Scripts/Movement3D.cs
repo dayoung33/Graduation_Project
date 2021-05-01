@@ -14,6 +14,10 @@ public class Movement3D : MonoBehaviour
     private Vector3 moveDirection;
     private CharacterController charcterController;
     private Animator animator;
+    [SerializeField]
+    private Transform UpPos;
+
+    public bool isClimbing = false;
     
 
     // Start is called before the first frame update
@@ -26,7 +30,7 @@ public class Movement3D : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(charcterController.isGrounded ==false)
+        if(charcterController.isGrounded ==false && !isClimbing)
         {
             moveDirection.y += gravity * Time.deltaTime;
             animator.ResetTrigger("Jump");
@@ -45,6 +49,17 @@ public class Movement3D : MonoBehaviour
         moveDirection = new Vector3(nomalizeDirection.x, moveDirection.y, nomalizeDirection.z);
     }
 
+    public void ClimbTo()
+    {
+        moveDirection.y = 0.3f;
+    }
+
+    public void ClimbEnd()
+    {
+        moveDirection.y = 0.0f;
+    }
+
+
     public void JumpTo()
     {
         if(charcterController.isGrounded==true)
@@ -52,6 +67,11 @@ public class Movement3D : MonoBehaviour
             moveDirection.y = jumpForce;
             animator.SetTrigger("Jump");
         }
+    }
+
+    public void ArrivalEvent()
+    {
+        transform.position = UpPos.position;
     }
 
 }

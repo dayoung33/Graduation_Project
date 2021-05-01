@@ -12,6 +12,9 @@ TagManager:
   - lb_bird
   - Rain
   - NotRain
+  - ClimbingSatrt
+  - ClimbingEnd
+  - ClimbingStart
   layers:
   - Default
   - TransparentFX

@@ -13,6 +13,7 @@ public class TPSCharacterController : MonoBehaviour
     [SerializeField]
     private Transform shield;
 
+
     private Movement3D playerMovement;
 
     private float limitMinX = -10.0f;
@@ -77,4 +78,5 @@ public class TPSCharacterController : MonoBehaviour
 
         return Mathf.Clamp(angle, min, max);
     }
+
 }
