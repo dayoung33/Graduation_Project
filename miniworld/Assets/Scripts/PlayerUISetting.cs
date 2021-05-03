@@ -19,7 +19,7 @@ public class PlayerUISetting : MonoBehaviour
     public GameObject WaterEffect;
     public Image WaterBubble;
 
-    private float waterPosY = -300;
+   // private float waterPosY = -300;
 
 
     // Start is called before the first frame update

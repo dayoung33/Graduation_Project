@@ -16,11 +16,22 @@ public class Enemy : MonoBehaviour
     public State curState = State.idle;
     private bool QuestInit = false;
 
+    private SubQuestManager subQuestManager;
+
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        subQuestManager = GameObject.Find("QuestManager").GetComponent<SubQuestManager>();
+    }
+
+    private void OnDisable()
+    {
+        if (SceneManager.GetActiveScene().name == "MainStage")
+        {
+            subQuestManager.spiderCount++;
+        }
     }
 
     void FreezeVelocity()
@@ -101,7 +112,7 @@ public class Enemy : MonoBehaviour
                     nav.isStopped = true;
                     nav.velocity = Vector3.zero;
                     animator.SetBool("isDead", true);
-                    Destroy(gameObject, 5.0f);
+                    Destroy(gameObject, 2.0f);
                     if (!QuestInit&&SceneManager.GetActiveScene().name == "Tutorial")
                     {
                         GameObject.Find("UISystem").GetComponent<UIManager>().Quest(UIManager.QuestNum.Finish);

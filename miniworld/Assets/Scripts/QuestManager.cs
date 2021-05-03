@@ -27,6 +27,7 @@ public class QuestManager : MonoBehaviour
         questText.text = @"작은 세상에 입장하셨습니다.";
     }
 
+
     // Update is called once per frame
     void Update()
     {
