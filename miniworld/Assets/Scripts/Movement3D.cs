@@ -40,7 +40,18 @@ public class Movement3D : MonoBehaviour
 
         if(moveDirection.x!=0&&moveDirection.z!=0)
             transform.forward = new Vector3(moveDirection.x, transform.forward.y, moveDirection.z).normalized;
-        charcterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+
+        ////////////////////////////치트키////////////////////////////////////
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            charcterController.Move(moveDirection * moveSpeed * 50.0f * Time.deltaTime);
+        }
+        ///////////////////////////////////////////////////////////////////// 
+        else
+        {
+            charcterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+        }
+       
     }
 
     public void MoveTo(Vector3 direction)

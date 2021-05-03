@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
                     animator.SetBool("IsMove", false);
                     animator.SetBool("IsAttack", false);
                     animator.ResetTrigger("Hit");
-                    if (7.0f >= dist)
+                    if (13.0f >= dist)
                     {
                         curState = State.walk;
                     }

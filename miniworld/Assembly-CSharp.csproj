@@ -62,8 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\DoorOpen.cs" />
     <Compile Include="Assets\FurnishedCabin\Scripts\MoveObjectController.cs" />
     <Compile Include="Assets\FurnishedCabin\Scripts\MoveableObject.cs" />
+    <Compile Include="Assets\MainQuestUIManager.cs" />
     <Compile Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Script\CameraTarget.cs" />
     <Compile Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Script\EffectController.cs" />
     <Compile Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Script\EffectDemo.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Assets\Scripts\QuestMark.cs" />
     <Compile Include="Assets\Scripts\QuestboxCollCheck.cs" />
     <Compile Include="Assets\Scripts\SceneChangeManager.cs" />
+    <Compile Include="Assets\Scripts\Sister.cs" />
     <Compile Include="Assets\Scripts\TPSCharacterController.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <None Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Shader\Toon Blended Premmultiply.shader" />

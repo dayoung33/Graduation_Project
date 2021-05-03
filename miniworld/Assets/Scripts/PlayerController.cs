@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerHP < playerMaxHP)
         {
-            playerHP += 0.1f;
+            playerHP += 0.01f;
         }
 
         if(hitCoolTime > 0.0f)
