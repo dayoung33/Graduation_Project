@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\SunQuestCollboxx.cs" />
     <Compile Include="Assets\Scripts\TPSCharacterController.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Vecuum.cs" />
     <None Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Shader\Toon Blended Premmultiply.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

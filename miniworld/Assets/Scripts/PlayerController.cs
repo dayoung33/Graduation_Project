@@ -232,6 +232,25 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
+     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "vecuum")
+        {
+            hitCoolTime = hitMaxCoolTime;
+            isGrabed = false;
+            animator.SetTrigger("Hit");
+            playerHP -= 10;
+            if (AroundObjs.Count > 0)
+            {
+                foreach (var obj in AroundObjs)
+                {
+                    obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
