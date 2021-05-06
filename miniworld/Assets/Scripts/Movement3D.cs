@@ -62,7 +62,7 @@ public class Movement3D : MonoBehaviour
 
     public void ClimbTo()
     {
-        moveDirection.y = 0.3f;
+        moveDirection.y = 10.0f*Time.deltaTime;
     }
 
     public void ClimbEnd()
