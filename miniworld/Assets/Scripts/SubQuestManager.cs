@@ -9,6 +9,7 @@ public class SubQuestManager : MonoBehaviour
     private RectTransform backTransform;
     private Image subImage;
     public GameObject backObject;
+    private AudioSource audio;
 
     public enum eSubQuest{opening, rain, spider, house, table, end};
 
@@ -17,6 +18,7 @@ public class SubQuestManager : MonoBehaviour
     public int spiderCount = 0;
 
     public bool clear = false;
+    private bool soundInit = false;
 
     public eSubQuest curQuest = eSubQuest.opening;
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class SubQuestManager : MonoBehaviour
         subText = backObject.GetComponentInChildren<Text>();
         backTransform = backObject.GetComponent<RectTransform>();
         backTransform.anchoredPosition = new Vector2(deltaX, 0);
+        audio = GetComponent<AudioSource>();
         subText.text = @"비내리는 공원 통과하기";
     }
 
@@ -51,9 +54,19 @@ public class SubQuestManager : MonoBehaviour
             case eSubQuest.rain:
                 {
                     if (!clear)
+                    {
                         QuestIn();
+                        if (!soundInit)
+                        {
+                            audio.Play();
+                            soundInit = true;
+                        }
+                    }
                     else
+                    {
                         QuestOut(eSubQuest.spider);
+                        soundInit = false;
+                    }
                     subText.text = @"비내리는 공원 통과하기";
                 }
                 break;
@@ -62,6 +75,11 @@ public class SubQuestManager : MonoBehaviour
                     if (!clear)
                     {
                         QuestIn();
+                        if (!soundInit)
+                        {
+                            audio.Play();
+                            soundInit = true;
+                        }
                         subText.text = "거미 처치하기 (" + spiderCount + " / 4)";
                         if (spiderCount >= 4)
                         {
@@ -69,24 +87,47 @@ public class SubQuestManager : MonoBehaviour
                         }
                     }
                     else
-                        QuestOut(eSubQuest.house);               
+                    {
+                        QuestOut(eSubQuest.house);
+                        soundInit = false;               
+                    }
                 }
                 break;
             case eSubQuest.house:
                 {
                     if (!clear)
+                    {
                         QuestIn();
+                        if (!soundInit)
+                        {
+                            audio.Play();
+                            soundInit = true;
+                        }
+                    }
                     else
+                    {
                         QuestOut(eSubQuest.table);
+                        soundInit = false;
+                    }
                     subText.text = @"지도를 보고 집 찾아가기";
                 }
                 break;
             case eSubQuest.table:
                 {
                     if (!clear)
+                    {
                         QuestIn();
+                        if (!soundInit)
+                        {
+                            audio.Play();
+                            soundInit = true;
+                        }
+                    }
                     else
+                    { 
                         QuestOut(eSubQuest.end);
+                        soundInit = false;
+                    }
                     subText.text = @"식탁에 올라가기";
                 }
                 break;
