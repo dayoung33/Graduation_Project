@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
     Rigidbody rigid;
     private int HP = 3;
 
+    private float FindDist = 8.0f;
+
     public enum State { idle, walk, attck, hit, dead, end };
     public State curState = State.idle;
     private bool QuestInit = false;
@@ -23,7 +25,12 @@ public class Enemy : MonoBehaviour
         nav = GetComponent<NavMeshAgent>();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        subQuestManager = GameObject.Find("QuestManager").GetComponent<SubQuestManager>();
+        if (SceneManager.GetActiveScene().name == "MainStage")
+        {
+            FindDist = 13.0f;
+            subQuestManager = GameObject.Find("QuestManager").GetComponent<SubQuestManager>();
+        }
+    
     }
 
     private void OnDisable()
@@ -62,7 +69,7 @@ public class Enemy : MonoBehaviour
                     animator.SetBool("IsMove", false);
                     animator.SetBool("IsAttack", false);
                     animator.ResetTrigger("Hit");
-                    if (13.0f >= dist)
+                    if (FindDist >= dist)
                     {
                         curState = State.walk;
                     }

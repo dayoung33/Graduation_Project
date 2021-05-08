@@ -194,6 +194,16 @@ public class PlayerController : MonoBehaviour
                 isGrabed = false;
                 animator.SetBool("Grabed", false);
             }
+            else
+            {
+                if (AroundObjs.Count > 0)
+                {
+                    foreach (var obj in AroundObjs)
+                    {
+                        obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                    }
+                }
+            }
         }
 
         if (shieldCoolTime > 0.0f)

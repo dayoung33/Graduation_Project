@@ -71,7 +71,10 @@
     <Compile Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Script\EffectShaderPropertyStr.cs" />
     <Compile Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Script\RenderEffect.cs" />
     <Compile Include="Assets\NatureStarterKit2\Particlecollection_Free samples\Plugins\Effect\Script\TransformExtension.cs" />
+    <Compile Include="Assets\Scripts\CleanerSoundController.cs" />
     <Compile Include="Assets\Scripts\DoorOpen.cs" />
+    <Compile Include="Assets\Scripts\Ending.cs" />
+    <Compile Include="Assets\Scripts\EndingCredit.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\LoadingManager.cs" />
     <Compile Include="Assets\Scripts\LodingManager.cs" />
