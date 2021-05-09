@@ -17,6 +17,7 @@ TagManager:
   - ClimbingStart
   - Spot
   - vecuum
+  - food
   layers:
   - Default
   - TransparentFX

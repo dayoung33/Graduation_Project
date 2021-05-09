@@ -46,10 +46,18 @@ public class PlayerUISetting : MonoBehaviour
         manaImage.fillAmount = playercontroller.playerMana * 0.01f;
         HPImaage.fillAmount = playercontroller.playerHP * 0.01f;
 
-        // if(playercontroller.hitCoolTime >0.0f)
-        // {
-        Blood.color = new Color(1, 1, 1, (playercontroller.hitCoolTime / playercontroller.hitMaxCoolTime));
-        // }
+        if (!playercontroller.isDead)
+        {
+            Blood.color = new Color(1, 1, 1, (playercontroller.hitCoolTime / playercontroller.hitMaxCoolTime));
+        }
+        else
+        {
+            Blood.color = new Color(0, 0, 0, (playercontroller.hitCoolTime / playercontroller.hitMaxCoolTime));
+        }
+
+
+
+
         //if (WaterEffect)
         //{
         //    if (playercontroller.itsRainning&&!playercontroller.underBench&&!playercontroller.ShieldOn)

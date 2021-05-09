@@ -21,10 +21,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform miniMapCameraPos;
 
+    public Transform respwnPos;
+    public Transform secondRespwnPos;
+
+
     private bool MiniMapOn = false;
     public bool itsRainning = false;
     public bool underBench = false;
     public bool ShieldOn = false;
+    public bool isDead = false;
 
     private bool isGrabed = false;
     public List<GameObject> AroundObjs;
@@ -43,6 +48,11 @@ public class PlayerController : MonoBehaviour
 
     private bool isClimbing = false;
     private bool climbEnd = false;
+    private bool isPushed = false;
+
+    public SubQuestManager subQuest;
+
+    public ParticleSystem hpParticle;
 
     private void Awake()
     {
@@ -51,21 +61,12 @@ public class PlayerController : MonoBehaviour
         shieldObj.SetActive(false);
         miniMap.SetActive(false);
         cameraArm = GameObject.Find("CameraArm").transform;
+        //hpParticle = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        float offset = 0.5f + Input.GetAxis("Sprint") * 0.5f;
-
-        if (horizontal !=0 || vertical != 0)
-            animator.SetFloat("AnimSpeed", 1.5f);
-        else
-            animator.SetFloat("AnimSpeed", 1.0f);
-
-
         if (playerMana < playerMaxMana)
         {
             playerMana += 0.3f;
@@ -76,71 +77,128 @@ public class PlayerController : MonoBehaviour
             playerHP += 0.01f;
         }
 
-        if(hitCoolTime > 0.0f)
-        {          
+        if (hitCoolTime > 0.0f)
+        {
             hitCoolTime -= Time.deltaTime;
         }
 
-        if (itsRainning && !underBench && !ShieldOn)
-        {
-            playerHP -= 0.3f;
-            if(!animator.GetBool("RainHit"))
-                animator.SetBool("RainHit", true);
-        }
-        else
-        {
-            animator.SetBool("RainHit", false);
-        }
+        //if (isDead)
+        //{
+        //    if (hitCoolTime <= 0)
+        //    {
+        //        Resurrection();
+        //    }
+        //}
 
-        Vector3 camForward = new Vector3(cameraArm.forward.x, 0, cameraArm.forward.z).normalized;
-        Vector3 camRight = new Vector3(cameraArm.right.x, 0, cameraArm.right.z).normalized;
-
-        if (!isClimbing)
+        if (!isDead)
         {
-            if (!climbEnd)
+            if (playerHP <= 0)
+                IsDead();
+
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+            float offset = 0.5f + Input.GetAxis("Sprint") * 0.5f;
+
+            if (horizontal != 0 || vertical != 0)
+                animator.SetFloat("AnimSpeed", 1.5f);
+            else
+                animator.SetFloat("AnimSpeed", 1.0f);
+
+            if (itsRainning && !underBench && !ShieldOn)
             {
-                animator.SetFloat("Horizontal", horizontal * offset);
-                animator.SetFloat("Vertical", vertical * offset);
-            }
-
-            MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
-            if (vertical == 0 && horizontal != 0)
-                MoveDir = camForward * 0.3f + camRight * horizontal * 0.3f * Time.deltaTime;
-            if (vertical < 0)
-                 MoveDir = new Vector3(horizontal, 0, vertical);           
-        }
-
-        else
-        {
-            if (!climbEnd)
-            {
-                MoveDir = new Vector3(0, 0, 0);
-                movement3D.ClimbTo();
+                if (playerHP > 0)
+                    playerHP -= 0.1f;
+                if (!animator.GetBool("RainHit"))
+                    animator.SetBool("RainHit", true);
             }
             else
             {
-                movement3D.ClimbEnd();
-                MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
-
+                animator.SetBool("RainHit", false);
             }
+
+            Vector3 camForward = new Vector3(cameraArm.forward.x, 0, cameraArm.forward.z).normalized;
+            Vector3 camRight = new Vector3(cameraArm.right.x, 0, cameraArm.right.z).normalized;
+
+            if (!isClimbing)
+            {
+                if (!climbEnd)
+                {
+                    animator.SetFloat("Horizontal", horizontal * offset);
+                    animator.SetFloat("Vertical", vertical * offset);
+                }
+
+                MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
+                if (vertical == 0 && horizontal != 0)
+                    MoveDir = camForward * 0.3f + camRight * horizontal * 0.3f * Time.deltaTime;
+                if (vertical < 0)
+                    MoveDir = new Vector3(horizontal, 0, vertical);
+            }
+
+            else
+            {
+                if (!climbEnd)
+                {
+                    MoveDir = new Vector3(0, 0, 0);
+                    movement3D.ClimbTo();
+                }
+                else
+                {
+                    movement3D.ClimbEnd();
+                    MoveDir = camForward * vertical + camRight * horizontal * 0.3f * Time.deltaTime;
+
+                }
+            }
+
+            movement3D.MoveTo(MoveDir);
+
+            if (Input.GetKeyDown(jumpKeyCode))
+            {
+                movement3D.JumpTo();
+            }
+
+            if (Input.GetKeyDown(shieldKeyCode) && (shieldCoolTime <= 0.0f) && playerMana > 0.0f)
+            {
+                animator.SetTrigger("Shield");
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (AroundObjs.Count > 0 && playerMana > 0.0f)
+                {
+                    isGrabed = true;
+                    animator.SetBool("Grabed", true);
+                    animator.SetFloat("AnimSpeed", 1.5f);
+                    foreach (var obj in AroundObjs)
+                    {
+                        obj.GetComponent<MovableObject>().curState = MovableObject.State.Gravity;
+                    }
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (isGrabed)
+                {
+                    isGrabed = false;
+                    animator.SetBool("Grabed", false);
+                }
+                else
+                {
+                    if (AroundObjs.Count > 0)
+                    {
+                        foreach (var obj in AroundObjs)
+                        {
+                            obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                        }
+                    }
+                }
+            }
+
+            if (shieldCoolTime > 0.0f)
+                shieldCoolTime -= Time.deltaTime;
         }
 
-
-       movement3D.MoveTo(MoveDir);
-    
-
-
-        if (Input.GetKeyDown(jumpKeyCode))
-        {
-            movement3D.JumpTo();
-        }
-
-        if (Input.GetKeyDown(shieldKeyCode) && (shieldCoolTime <= 0.0f) && playerMana > 0.0f) 
-        {
-            animator.SetTrigger("Shield");
-        }
-
-        if(Input.GetKeyUp(MiniMapKeyCode))
+        if (Input.GetKeyUp(MiniMapKeyCode))
         {
             if (!MiniMapOn)
             {
@@ -154,18 +212,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(MiniMapOn)
+        if (MiniMapOn)
         {
 
-             if (Input.GetKeyDown(MiniMapZoomKeyCode))
-             {
+            if (Input.GetKeyDown(MiniMapZoomKeyCode))
+            {
                 if (SceneManager.GetActiveScene().name == "MainStage")
                     miniMapCameraPos.position = new Vector3(transform.position.x, 80, transform.position.z - 20);
                 else if (SceneManager.GetActiveScene().name == "Tutorial")
                     miniMapCameraPos.position = new Vector3(transform.position.x, 20, transform.position.z - 0);
             }
-             if (Input.GetKeyUp(MiniMapZoomKeyCode))
-             {
+            if (Input.GetKeyUp(MiniMapZoomKeyCode))
+            {
                 if (SceneManager.GetActiveScene().name == "MainStage")
                     miniMapCameraPos.position = new Vector3(4.2f, 182, -44);
                 else if (SceneManager.GetActiveScene().name == "Tutorial")
@@ -173,42 +231,6 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        if(Input.GetMouseButtonDown(0))
-        {
-            if (AroundObjs.Count > 0&& playerMana > 0.0f)
-            {
-                isGrabed = true;
-                animator.SetBool("Grabed", true);
-                animator.SetFloat("AnimSpeed", 1.5f);
-                foreach (var obj in AroundObjs)
-                {
-                    obj.GetComponent<MovableObject>().curState = MovableObject.State.Gravity;
-                }
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (isGrabed)
-            { 
-                isGrabed = false;
-                animator.SetBool("Grabed", false);
-            }
-            else
-            {
-                if (AroundObjs.Count > 0)
-                {
-                    foreach (var obj in AroundObjs)
-                    {
-                        obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
-                    }
-                }
-            }
-        }
-
-        if (shieldCoolTime > 0.0f)
-            shieldCoolTime -= Time.deltaTime;
-
     }
 
     private void LateUpdate()
@@ -232,7 +254,8 @@ public class PlayerController : MonoBehaviour
                 hitCoolTime = hitMaxCoolTime;
                 isGrabed = false;
                 animator.SetTrigger("Hit");
-                playerHP -= 10;
+                if (playerHP > 0)
+                    playerHP -= 10;
                 if (AroundObjs.Count > 0)
                 {
                     foreach (var obj in AroundObjs)
@@ -252,7 +275,8 @@ public class PlayerController : MonoBehaviour
             hitCoolTime = hitMaxCoolTime;
             isGrabed = false;
             animator.SetTrigger("Hit");
-            playerHP -= 10;
+            if(playerHP > 0)
+                playerHP -= 10;
             if (AroundObjs.Count > 0)
             {
                 foreach (var obj in AroundObjs)
@@ -291,6 +315,22 @@ public class PlayerController : MonoBehaviour
                 movement3D.isClimbing = true;
             }
         }
+        if (other.gameObject.tag == "food")
+        {
+            if (!isPushed && Input.GetKeyDown(ClimbKeyCode))
+            {
+                isPushed = true;
+                animator.SetTrigger("isPicked");
+                playerHP += 10;
+                if (playerHP > 100)
+                    playerHP = 100;
+                hpParticle.Play();
+            }
+            if(Input.GetKeyUp(ClimbKeyCode))
+            {
+                isPushed = false;
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -311,6 +351,21 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    private void IsDead()
+    {
+        isDead = true;
+        animator.SetBool("Death", true);
+        hitCoolTime = hitMaxCoolTime;
+    }
+
+    //public void Resurrection()
+    //{
+    //    animator.SetBool("Death", false);
+    //    playerHP = 100;
+    //    playerMana = 100;
+    //    isDead = false;
+    //}
 
 
     private void ShieldEnd()
@@ -344,6 +399,23 @@ public class PlayerController : MonoBehaviour
                 obj.GetComponent<MovableObject>().curState = MovableObject.State.Attack;
             }
         }
+    }
+
+    private void EndPickUp()
+    {
+        hpParticle.Stop();
+    }
+
+    public void Respawn()
+    {
+        animator.SetBool("Death", false);
+        playerHP = 100;
+        playerMana = 100;
+        isDead = false;
+        if(subQuest.curQuest == SubQuestManager.eSubQuest.rain)
+            transform.position = respwnPos.position;
+        if (subQuest.curQuest == SubQuestManager.eSubQuest.spider)
+            transform.position = secondRespwnPos.position;
     }
 
 }
