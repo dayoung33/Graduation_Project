@@ -302,6 +302,22 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("ClimbingEnd");
             climbEnd = true;
         }
+        if (other.gameObject.tag == "MonsterWeapon")
+        {
+            hitCoolTime = hitMaxCoolTime;
+            isGrabed = false;
+            animator.SetTrigger("Hit");
+            if (playerHP > 0)
+                playerHP -= 10;
+            if (AroundObjs.Count > 0)
+            {
+                foreach (var obj in AroundObjs)
+                {
+                    obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                }
+            }
+        }
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -319,6 +335,8 @@ public class PlayerController : MonoBehaviour
         {
             if (!isPushed && Input.GetKeyDown(ClimbKeyCode))
             {
+                if (subQuest.curQuest == SubQuestManager.eSubQuest.bread)
+                    subQuest.CurQuestClear(SubQuestManager.eSubQuest.bread);
                 isPushed = true;
                 animator.SetTrigger("isPicked");
                 playerHP += 10;
@@ -345,6 +363,7 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.tag == "ClimbingEnd")
         {
+            subQuest.CurQuestClear(SubQuestManager.eSubQuest.table);
             climbEnd = false;
             isClimbing = false;
             movement3D.isClimbing = false;

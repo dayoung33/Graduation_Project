@@ -11,7 +11,7 @@ public class SubQuestManager : MonoBehaviour
     public GameObject backObject;
     private AudioSource audio;
 
-    public enum eSubQuest{opening, rain, spider, house, table, end};
+    public enum eSubQuest{opening, rain, bread, spider, house, table,save,ending, end};
 
     private float deltaX = 100;
 
@@ -47,11 +47,27 @@ public class SubQuestManager : MonoBehaviour
         switch(curQuest)
         {
             case eSubQuest.opening:
-                {
-
-                }
                 break;
             case eSubQuest.rain:
+                {
+                    if (!clear)
+                    {
+                        QuestIn();
+                        if (!soundInit)
+                        {
+                            audio.Play();
+                            soundInit = true;
+                        }
+                    }
+                    else
+                    {
+                        QuestOut(eSubQuest.bread);
+                        soundInit = false;
+                    }
+                    subText.text = @"비내리는 공원 통과하기";
+                }
+                break;
+            case eSubQuest.bread:
                 {
                     if (!clear)
                     {
@@ -67,7 +83,7 @@ public class SubQuestManager : MonoBehaviour
                         QuestOut(eSubQuest.spider);
                         soundInit = false;
                     }
-                    subText.text = @"비내리는 공원 통과하기";
+                    subText.text = @"새를 피해 빵 먹기";
                 }
                 break;
             case eSubQuest.spider:
@@ -92,7 +108,7 @@ public class SubQuestManager : MonoBehaviour
                         soundInit = false;               
                     }
                 }
-                break;
+                break;           
             case eSubQuest.house:
                 {
                     if (!clear)
@@ -125,16 +141,51 @@ public class SubQuestManager : MonoBehaviour
                     }
                     else
                     { 
-                        QuestOut(eSubQuest.end);
+                        QuestOut(eSubQuest.save);
                         soundInit = false;
                     }
                     subText.text = @"식탁에 올라가기";
                 }
                 break;
-            case eSubQuest.end:
+            case eSubQuest.save:
                 {
-
+                    if (!clear)
+                    {
+                        QuestIn();
+                        if (!soundInit)
+                        {
+                            audio.Play();
+                            soundInit = true;
+                        }
+                    }
+                    else
+                    {
+                        QuestOut(eSubQuest.ending);
+                        soundInit = false;
+                    }
+                    subText.text = @"케이지 안 동생 구하기";
                 }
+                break;
+            case eSubQuest.ending:
+                {
+                    if (!clear)
+                    {
+                        QuestIn();
+                        if (!soundInit)
+                        {
+                            audio.Play();
+                            soundInit = true;
+                        }
+                    }
+                    else
+                    {
+                        soundInit = false;
+                    }
+                    subText.text = @"빛의 기둥으로 이동하기";
+                }       
+                break;
+
+            case eSubQuest.end:
                 break;
         }
     }

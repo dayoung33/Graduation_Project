@@ -18,6 +18,7 @@ public class PlayerUISetting : MonoBehaviour
     public Image Blood;
     public GameObject WaterEffect;
     public Image WaterBubble;
+    public GameObject pressG;
 
    // private float waterPosY = -300;
 
@@ -26,6 +27,7 @@ public class PlayerUISetting : MonoBehaviour
     void Start()
     {
         playercontroller = GetComponent<PlayerController>();
+        pressG.SetActive(false);
     }
 
     // Update is called once per frame
@@ -77,5 +79,21 @@ public class PlayerUISetting : MonoBehaviour
         //        waterPosY += Time.deltaTime * 200;
         //    WaterBubble.rectTransform.anchoredPosition = new Vector3(0, waterPosY, 0);
         //}
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "food"|| other.gameObject.tag == "ClimbingStart")
+        {
+            pressG.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "food" || other.gameObject.tag == "ClimbingStart")
+        {
+            pressG.SetActive(false);
+        }
     }
 }
