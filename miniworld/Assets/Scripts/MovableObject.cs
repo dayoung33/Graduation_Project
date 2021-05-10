@@ -23,6 +23,8 @@ public class MovableObject : MonoBehaviour
     public float GrabTime = 0.0f;
 
     public bool isAround = false;
+
+    private AudioSource audio;
  
 
     // Start is called before the first frame update
@@ -34,6 +36,7 @@ public class MovableObject : MonoBehaviour
         playerTransform = GameObject.Find("Female_01_V01").transform;
         playercontroller = GameObject.Find("Female_01_V01").GetComponent<PlayerController>();
         playerHand = GameObject.Find("GrabObject").transform;
+        audio = GetComponent<AudioSource>();
 }
 
 // Update is called once per frame
@@ -62,7 +65,7 @@ void Update()
                             GrabTime += Time.deltaTime;
                             if (GrabTime > 4.0f)
                                 GrabTime = 4.0f;
-                            playercontroller.playerMana -= (GrabTime * 0.05f);
+                            playercontroller.playerMana -= (GrabTime * 0.03f);
                             if (playercontroller.playerMana < -10.0f)
                                 playercontroller.playerMana = -10.0f;
                             myrigidbody.useGravity = false;
@@ -92,6 +95,11 @@ void Update()
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
+        {
+            if(curState!= State.End)
+                audio.Play();
             curState = State.End;
+           
+        }
     }
 }

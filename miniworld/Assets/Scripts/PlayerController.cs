@@ -69,12 +69,12 @@ public class PlayerController : MonoBehaviour
     {
         if (playerMana < playerMaxMana)
         {
-            playerMana += 0.3f;
+            playerMana += 10.0f * Time.deltaTime; ;
         }
 
         if (playerHP < playerMaxHP)
         {
-            playerHP += 0.01f;
+            playerHP += 0.1f * Time.deltaTime; ;
         }
 
         if (hitCoolTime > 0.0f)
@@ -82,18 +82,11 @@ public class PlayerController : MonoBehaviour
             hitCoolTime -= Time.deltaTime;
         }
 
-        //if (isDead)
-        //{
-        //    if (hitCoolTime <= 0)
-        //    {
-        //        Resurrection();
-        //    }
-        //}
+        if (playerHP <= 0)
+            IsDead();
 
         if (!isDead)
-        {
-            if (playerHP <= 0)
-                IsDead();
+        {            
 
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
@@ -107,7 +100,7 @@ public class PlayerController : MonoBehaviour
             if (itsRainning && !underBench && !ShieldOn)
             {
                 if (playerHP > 0)
-                    playerHP -= 0.1f;
+                    playerHP -= 5.0f * Time.deltaTime;
                 if (!animator.GetBool("RainHit"))
                     animator.SetBool("RainHit", true);
             }

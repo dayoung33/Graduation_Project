@@ -8,16 +8,24 @@ public class BirdController : MonoBehaviour
     public Transform Target;
     public Transform BreadPos;
     public Transform RunPos;
+    public AudioClip HitAudio;
+    public AudioClip RunAudio;
+
+    private AudioSource audio;
+
 
     public int HP = 10;
 
     private bool isAround = false;
     private bool run = false;
+    private bool InitRunSound = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();       
+        animator = GetComponent<Animator>();
+        audio = GetComponent<AudioSource>();
+        audio.clip = HitAudio;
     }
 
     // Update is called once per frame
@@ -34,8 +42,16 @@ public class BirdController : MonoBehaviour
 
         if(run)
         {
+            if(!InitRunSound)
+            {
+                audio.Stop();
+                audio.clip = RunAudio;
+                audio.Play();
+                InitRunSound = true;
+            }
             transform.LookAt(RunPos);
-            transform.position = Vector3.MoveTowards(transform.position, RunPos.position, 0.1f);
+            GetComponent<Rigidbody>().useGravity = false;
+            transform.position = Vector3.MoveTowards(transform.position, RunPos.position, 1.2f * Time.deltaTime);
         }
     }
 
@@ -48,12 +64,12 @@ public class BirdController : MonoBehaviour
                 HP--;
                 if(HP <= 0)
                 {
+                    animator.SetBool("isAround", false);
                     animator.SetBool("Run",true);
                     run = true;
                 }
                 else
                 {
-                    animator.SetFloat("AnimSpeed", 2.0f);
                     animator.SetTrigger("Hit");
                 }
             }
@@ -80,5 +96,15 @@ public class BirdController : MonoBehaviour
     private void MoveToPlayer()
     {
         transform.position = Vector3.MoveTowards(transform.position, Target.position, 0.1f);
+    }
+
+    private void StartHit()
+    {
+        audio.Play();
+    }
+
+    private void EndHit()
+    {
+        audio.Stop();
     }
 }
