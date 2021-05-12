@@ -56,6 +56,10 @@ public class Enemy : MonoBehaviour
         if (HP <= 0)
             curState = State.dead;
 
+        ///////치트키////////
+        if(Input.GetKeyDown(KeyCode.F1))
+            curState = State.dead;
+
         StateChange();
     }
 
