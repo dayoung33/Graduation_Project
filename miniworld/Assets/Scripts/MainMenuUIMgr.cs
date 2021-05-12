@@ -7,17 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUIMgr : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public AudioSource audio;
+    public AudioClip hoverFx;
+    public AudioClip clickFx;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
      public void OnclickStart()
     {
         LodingManager.LoadScene("MainStage");
@@ -33,5 +26,14 @@ public class MainMenuUIMgr : MonoBehaviour
     public void OnclickQuit()
     {
         Application.Quit();
+    }
+
+    public void HoverSound()
+    {
+        audio.PlayOneShot(hoverFx);
+    }
+    public void ClickSound()
+    {
+        audio.PlayOneShot(clickFx);
     }
 }

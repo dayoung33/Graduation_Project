@@ -27,7 +27,8 @@ public class PlayerUISetting : MonoBehaviour
     void Start()
     {
         playercontroller = GetComponent<PlayerController>();
-        pressG.SetActive(false);
+        if(pressG)
+            pressG.SetActive(false);
     }
 
     // Update is called once per frame
@@ -85,7 +86,8 @@ public class PlayerUISetting : MonoBehaviour
     {
         if(other.gameObject.tag == "food"|| other.gameObject.tag == "ClimbingStart")
         {
-            pressG.SetActive(true);
+            if (pressG)
+                pressG.SetActive(true);
         }
     }
 
@@ -93,7 +95,8 @@ public class PlayerUISetting : MonoBehaviour
     {
         if (other.gameObject.tag == "food" || other.gameObject.tag == "ClimbingStart")
         {
-            pressG.SetActive(false);
+            if (pressG)
+                pressG.SetActive(false);
         }
     }
 }
