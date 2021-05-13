@@ -125,7 +125,7 @@ public class Enemy : MonoBehaviour
                     animator.SetBool("isDead", true);
                     Destroy(gameObject, 2.0f);
                     if (!QuestInit&&SceneManager.GetActiveScene().name == "Tutorial")
-                    {
+                    {                      
                         GameObject.Find("UISystem").GetComponent<UIManager>().Quest(UIManager.QuestNum.Finish);
                         QuestInit = true;
                     }
@@ -146,4 +146,8 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void HitSoundPlay()
+    {
+        GetComponent<AudioSource>().Play();
+    }
 }

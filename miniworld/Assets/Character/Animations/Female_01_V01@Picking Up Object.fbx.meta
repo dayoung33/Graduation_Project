@@ -59,10 +59,26 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0
+        functionName: EatSoundPlay
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 0ea97a0151659d14a899deadaf5ae9ce,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.6115281
         functionName: EndPickUp
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 16d24d773c8812b48aa84ba2814fd626,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.17316794
+        functionName: HealSoundPlay
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 0ea97a0151659d14a899deadaf5ae9ce,
           type: 3}
         floatParameter: 0
         intParameter: 0

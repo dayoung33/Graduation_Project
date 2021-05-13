@@ -18,7 +18,7 @@ public class MovableObject : MonoBehaviour
 
     PlayerController playercontroller;
     private float throwPower = 1.0f;
-    private float moveSpeed = 0.5f;
+    private float moveSpeed = 1.0f;
     private float maxThrowPower = 1.0f;
     public float GrabTime = 0.0f;
 
@@ -52,7 +52,7 @@ void Update()
                         throwAngle.y = 10.0f;
                         myrigidbody.useGravity = true;
                         boxCollider.isTrigger = false;
-                        throwPower *= (GrabTime * 0.3f);
+                        throwPower *= (GrabTime * 0.4f);
                         if (throwPower >= maxThrowPower)
                             throwPower = maxThrowPower;
                         myrigidbody.AddForce(throwAngle * throwPower * Time.deltaTime, ForceMode.Impulse);

@@ -67,6 +67,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.36823085
+        functionName: PowerSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 0ea97a0151659d14a899deadaf5ae9ce,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
