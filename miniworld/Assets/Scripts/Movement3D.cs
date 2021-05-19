@@ -62,7 +62,7 @@ public class Movement3D : MonoBehaviour
 
     public void ClimbTo()
     {
-        moveDirection.y = 10.0f * Time.deltaTime;
+        moveDirection.y = 20.0f * Time.deltaTime;
     }
 
     public void ClimbEnd()
@@ -76,6 +76,14 @@ public class Movement3D : MonoBehaviour
         if(charcterController.isGrounded==true)
         {
             moveDirection.y = jumpForce;
+            animator.SetTrigger("Jump");
+        }
+    }
+    public void PowerJumpTo()
+    {
+        if (charcterController.isGrounded == true)
+        {
+            moveDirection.y = jumpForce * 1.5f;
             animator.SetTrigger("Jump");
         }
     }

@@ -149,6 +149,11 @@ public class PlayerController : MonoBehaviour
                 movement3D.JumpTo();
             }
 
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                movement3D.PowerJumpTo();
+            }
+
             if (Input.GetKeyDown(shieldKeyCode) && (shieldCoolTime <= 0.0f) && playerMana > 0.0f)
             {
                 animator.SetTrigger("Shield");

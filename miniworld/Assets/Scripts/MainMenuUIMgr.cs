@@ -19,10 +19,7 @@ public class MainMenuUIMgr : MonoBehaviour
     {
         LodingManager.LoadScene("Tutorial");
     }
-    public void OnclickSetting()
-    {
-        Debug.Log("세팅");
-    }
+
     public void OnclickQuit()
     {
         Application.Quit();

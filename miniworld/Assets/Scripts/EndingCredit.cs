@@ -7,9 +7,11 @@ public class EndingCredit : MonoBehaviour
 {
     public Image backImage;
     public RectTransform textTransform;
+    public AudioSource playersound;
     private float time = 0;
     public bool isEnd = false;
     private float ypos = -700;
+    private bool isinit = false;
 
     private void Start()
     {
@@ -23,10 +25,15 @@ public class EndingCredit : MonoBehaviour
             time += Time.deltaTime;
             if (time <= 1f)
             {
-                backImage.color = new Color(1, 1, 1, time);
+                backImage.color = new Color(1, 1, 1, time);               
             }
             else
             {
+                if (!isinit)
+                {
+                    playersound.mute = true;
+                    isinit = true;
+                }
                 backImage.color = new Color(1, 1, 1, 1);
                 if (ypos <= 0)
                 {
