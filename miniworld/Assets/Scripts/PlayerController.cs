@@ -148,11 +148,18 @@ public class PlayerController : MonoBehaviour
             {
                 movement3D.JumpTo();
             }
-
-            if (Input.GetKeyDown(KeyCode.Tab))
+            ///////////////////치트키////////////////////////
+            if (Input.GetKeyDown(KeyCode.V))
             {
                 movement3D.PowerJumpTo();
             }
+
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                playerHP = playerMaxHP;
+            }
+            ///////////////////치트키////////////////////////
+
 
             if (Input.GetKeyDown(shieldKeyCode) && (shieldCoolTime <= 0.0f) && playerMana > 0.0f)
             {
@@ -270,11 +277,13 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "vecuum")
         {
+            if (ShieldOn)
+                return;
             hitCoolTime = hitMaxCoolTime;
             isGrabed = false;
             animator.SetTrigger("Hit");
             if(playerHP > 0)
-                playerHP -= 10;
+                playerHP -= 30;
             if (AroundObjs.Count > 0)
             {
                 foreach (var obj in AroundObjs)
@@ -302,11 +311,13 @@ public class PlayerController : MonoBehaviour
         }
         if (other.gameObject.tag == "MonsterWeapon")
         {
+            if (ShieldOn)
+                return;
             hitCoolTime = hitMaxCoolTime;
             isGrabed = false;
             animator.SetTrigger("Hit");
             if (playerHP > 0)
-                playerHP -= 10;
+                playerHP -= 6;
             if (AroundObjs.Count > 0)
             {
                 foreach (var obj in AroundObjs)

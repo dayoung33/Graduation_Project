@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Sister : MonoBehaviour
 {
-    private bool isEscape = false;
+    public bool isEscape = false;
     [SerializeField]
     private Transform FollowPos;
     private Animator animator;
     private Animator playerAnimator;
+    public Transform shield;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class Sister : MonoBehaviour
             transform.position = FollowPos.position;
             animator.SetFloat("Horizontal", playerAnimator.GetFloat("Horizontal"));
             animator.SetFloat("Vertical", playerAnimator.GetFloat("Vertical"));
+            shield.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         }
     }
 

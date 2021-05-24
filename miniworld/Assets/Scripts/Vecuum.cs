@@ -9,6 +9,7 @@ public class Vecuum : MonoBehaviour
     public Transform[] target = new Transform[4];
     private Transform curTarget;
     NavMeshAgent nav;
+    [SerializeField]
     private int targetnum = 0;
 
 
@@ -31,12 +32,16 @@ public class Vecuum : MonoBehaviour
     {
         if(other.gameObject.tag =="Spot")
         {
-            if (targetnum == 0)
-                targetnum = 3;
-            else
-                targetnum -= 1;
-
-
+            int randomNum = Random.Range(0, 4);
+            if (targetnum == randomNum)
+            {
+                if (targetnum == 0)
+                    randomNum += 1;
+                else
+                    randomNum -= 1;
+            }
+            
+            targetnum = randomNum;
             curTarget = target[targetnum];
             nav.SetDestination(curTarget.position);
         }

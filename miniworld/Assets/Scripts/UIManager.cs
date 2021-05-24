@@ -14,10 +14,13 @@ public class UIManager : MonoBehaviour
     {
         LightSylinder.SetActive(false);
         audio = GetComponent<AudioSource>();
+        CheatBoxObject.SetActive(false);
     }
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.F4))
+            CheatBoxObject.SetActive(true);
     }
 
     public void Quest(QuestNum ID)

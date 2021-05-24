@@ -22,6 +22,9 @@ public class EndingCredit : MonoBehaviour
     {
         if(isEnd)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                Application.Quit();
+
             time += Time.deltaTime;
             if (time <= 1f)
             {

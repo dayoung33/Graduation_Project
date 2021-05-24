@@ -14,8 +14,9 @@ public class BirdController : MonoBehaviour
     private AudioSource audio;
 
 
-    public int HP = 10;
+    public int HP = 5;
 
+    [SerializeField]
     private bool isAround = false;
     private bool run = false;
     private bool InitRunSound = false;
@@ -70,15 +71,16 @@ public class BirdController : MonoBehaviour
                 }
                 else
                 {
+                    animator.SetFloat("AnimSpeed", 4.0f);
                     animator.SetTrigger("Hit");
                 }
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             isAround = true;
             animator.SetBool("isAround", true);
