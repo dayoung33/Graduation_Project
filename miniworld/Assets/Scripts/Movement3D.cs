@@ -44,14 +44,19 @@ public class Movement3D : MonoBehaviour
         ////////////////////////////치트키////////////////////////////////////
         if(Input.GetKeyDown(KeyCode.R))
         {
-            charcterController.Move(moveDirection * moveSpeed * 50.0f * Time.deltaTime);
+            charcterController.Move(moveDirection * moveSpeed * 100.0f * Time.deltaTime);
         }
         ///////////////////////////////////////////////////////////////////// 
         else
         {
             charcterController.Move(moveDirection * moveSpeed * Time.deltaTime);
         }
-       
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            ArrivalEvent();
+        }
+
     }
 
     public void MoveTo(Vector3 direction)

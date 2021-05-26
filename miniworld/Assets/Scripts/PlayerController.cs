@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerHP < playerMaxHP)
         {
-            playerHP += 0.1f * Time.deltaTime; ;
+            playerHP += 0.5f * Time.deltaTime; ;
         }
 
         if (hitCoolTime > 0.0f)
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
             if (itsRainning && !underBench && !ShieldOn)
             {
                 if (playerHP > 0)
-                    playerHP -= 5.0f * Time.deltaTime;
+                    playerHP -= 8.0f * Time.deltaTime;
                 if (!animator.GetBool("RainHit"))
                     animator.SetBool("RainHit", true);
             }
@@ -279,16 +279,19 @@ public class PlayerController : MonoBehaviour
         {
             if (ShieldOn)
                 return;
-            hitCoolTime = hitMaxCoolTime;
-            isGrabed = false;
-            animator.SetTrigger("Hit");
-            if(playerHP > 0)
-                playerHP -= 30;
-            if (AroundObjs.Count > 0)
+            if (hitCoolTime <= 0.0f)
             {
-                foreach (var obj in AroundObjs)
+                hitCoolTime = hitMaxCoolTime;
+                isGrabed = false;
+                animator.SetTrigger("Hit");
+                if (playerHP > 0)
+                    playerHP -= 30;
+                if (AroundObjs.Count > 0)
                 {
-                    obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                    foreach (var obj in AroundObjs)
+                    {
+                        obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                    }
                 }
             }
         }
@@ -313,16 +316,19 @@ public class PlayerController : MonoBehaviour
         {
             if (ShieldOn)
                 return;
-            hitCoolTime = hitMaxCoolTime;
-            isGrabed = false;
-            animator.SetTrigger("Hit");
-            if (playerHP > 0)
-                playerHP -= 6;
-            if (AroundObjs.Count > 0)
+            if (hitCoolTime <= 0.0f)
             {
-                foreach (var obj in AroundObjs)
+                hitCoolTime = hitMaxCoolTime;
+                isGrabed = false;
+                animator.SetTrigger("Hit");
+                if (playerHP > 0)
+                    playerHP -= 6;
+                if (AroundObjs.Count > 0)
                 {
-                    obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                    foreach (var obj in AroundObjs)
+                    {
+                        obj.GetComponent<MovableObject>().curState = MovableObject.State.End;
+                    }
                 }
             }
         }

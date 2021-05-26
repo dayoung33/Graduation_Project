@@ -12,19 +12,18 @@ public class EndingCredit : MonoBehaviour
     public bool isEnd = false;
     private float ypos = -700;
     private bool isinit = false;
+    public GameObject quitbtn;
 
     private void Start()
     {
         backImage.color = new Color(1, 1, 1, 0);
+        quitbtn.SetActive(false);
     }
 
     void Update()
     {
         if(isEnd)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                Application.Quit();
-
             time += Time.deltaTime;
             if (time <= 1f)
             {
@@ -46,9 +45,16 @@ public class EndingCredit : MonoBehaviour
                 else
                 {
                     isEnd = false;
+                    quitbtn.SetActive(true);
+
                 }
             }
         }
+    }
+
+    public void OnclickQuit()
+    {
+        Application.Quit();
     }
 
 }

@@ -32,7 +32,16 @@ public class BirdController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isAround)
+        ///////치트키////////
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            HP = -1;
+            animator.SetBool("Run", true);
+            run = true;         
+        }
+
+
+        if (isAround)
         {
             transform.LookAt(Target);
         }

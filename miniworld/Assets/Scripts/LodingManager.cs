@@ -30,7 +30,7 @@ public class LodingManager : MonoBehaviour
                 tip.text = @"Tip! 빠르게 달리려면 Shift키를 눌러보세요.";
                 break;
             case 3:
-                tip.text = @"Tip! 새를 피하고 싶다면 빵부스러기를 사용해 보세요.";
+                tip.text = @"Tip! 음식을 먹으면 체력을 빠르게 채울 수 있습니다.";
                 break;
             case 4:
                 tip.text = @"Tip! M키를 이용해 미니맵을 확인할 수 있습니다.";
