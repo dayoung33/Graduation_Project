@@ -98,5 +98,65 @@ Unity
 - 집 안을 무작위로 돌아다니면서 청소를 함, 플레이어는 소리를 듣고 가까이에 청소기가 다가오는 것을 감지할 수 있음, 플레이어와 청소기가 부딪힐 경우 플레이어에게 치명타
 
 
+# 리소스 출처
+모든 리소스는 무료로 제공된 리소스를 사용하였음
+
+그래픽 리소스
+
+플레이어 
+- 모델	 
+https://assetstore.unity.com/packages/3d/characters/human-characters-free-sample-pack-181554
+- 방어막	
+https://assetstore.unity.com/packages/vfx/shaders/responsive-energy-shield-141118	
+- 애니메이션	 
+https://www.mixamo.com/#/?page=1&type=Motion%2CMotionPack	
+
+
+방해요소 리소스
+
+1. 거미	 
+https://assetstore.unity.com/packages/3d/characters/animals/insects/animated-spider-22986
+2. 새	 
+https://assetstore.unity.com/packages/3d/characters/animals/birds/living-birds-15649
+3. 비	 
+https://assetstore.unity.com/packages/essentials/asset-packs/unity-particle-pack-5-x-73777	
+4.	로봇청소기	 
+https://www.turbosquid.com/ko/3d-models/floor-carpet-model-1409270
+
+맵 리소스
+
+1.	튜토리얼 맵	 
+https://assetstore.unity.com/packages/3d/environments/sci-fi/snaps-prototype-sci-fi-industrial-136759	
+2.	도시 건물 & 길
+https://assetstore.unity.com/packages/tools/game-toolkits/citytools-88707	
+4.	집	 
+https://assetstore.unity.com/packages/3d/environments/urban/furnished-cabin-71426	
+4.	나무	 
+https://assetstore.unity.com/packages/3d/environments/fantasy/fantasy-forest-environment-free-demo-35361	
+5.	공원, 도시 거치물	 
+https://assetstore.unity.com/packages/3d/props/city-props-pack-153581	
+6.	마트, 메인 스테이지 스카이 박스	 
+https://assetstore.unity.com/packages/3d/environments/roadways/windridge-city-132222	
+7.	빵	 
+https://assetstore.unity.com/packages/3d/props/food/croissants-pack-112263	
+8.	햄스터 케이지	 
+https://assetstore.unity.com/packages/3d/props/hamstercage-110028	
+9.	돌	 
+https://assetstore.unity.com/packages/3d/environments/landscapes/photoreal-stones-pack-demo-70005	
+
+
+기타 그래픽 리소스
+
+1.	빛의 기둥 파티클, 플레이어 체력 증가 Effect	 
+https://assetstore.unity.com/packages/vfx/particles/particle-collection-skj-2016-free-samples-72399	
+2.	플레이어 UI	
+https://assetstore.unity.com/packages/2d/gui/icons/free-ui-pack-170878	
+3.	로고 폰트	 
+https://assetstore.unity.com/packages/2d/fonts/free-pixel-font-thaleah-140059	
+
+사운드 리소스
+
+1.	효과음	https://www.zapsplat.com/sound-effect-categories/
+2.	BGM	https://studio.youtube.com/channel/UCFDHBsEIxpSzgrM2uoG_IBQ/music
 
 
