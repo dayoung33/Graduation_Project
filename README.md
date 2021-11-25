@@ -1,6 +1,4 @@
-# Graduation_Project
-
-게임 타이틀 <3cm Hunter>
+# <3cm Hunter>
 
 “어느 날 몸이 3cm로 작아졌다, 끝까지 살아남아 동생을 구하자!”
 
